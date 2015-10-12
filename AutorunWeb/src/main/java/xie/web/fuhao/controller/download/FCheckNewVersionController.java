@@ -54,7 +54,10 @@ public class FCheckNewVersionController {
 		String newVersionNameFileName = "FileNotFound";
 		File newVersionNameFile = FNewVersionUtils.getNewVersionFile(request);
 		if (newVersionNameFile != null) {
-			newVersionNameFileName = newVersionNameFile.getName().replace(".exe", "");
+			newVersionNameFileName = newVersionNameFile.getName();
+			newVersionNameFileName = newVersionNameFileName.replace(".exe", "");
+			newVersionNameFileName = newVersionNameFileName.replace(".zip", "");
+			newVersionNameFileName = newVersionNameFileName.replace(".rar", "");
 //			newVersionNameFileName = new String(newVersionNameFileName.getBytes("UTF-8"), "iso-8859-1");
 		}
 		return newVersionNameFileName;

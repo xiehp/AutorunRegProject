@@ -2,7 +2,6 @@ package xie.web.base.db.dao;
 
 import java.util.List;
 
-import xie.web.base.db.dao.base.IXBaseDao;
 import xie.web.base.db.dao.base.IXBaseDao_back;
 import xie.web.base.db.entity.impl.XRegisterInfoCheckHistoryEntity;
 
