@@ -1,0 +1,20 @@
+package xie.web.base.db.dao;
+
+import java.util.List;
+
+import xie.web.base.db.dao.base.IXBaseDao;
+import xie.web.base.db.entity.impl.XRegisterInfoCheckHistoryEntity;
+
+public interface IRegisterInfoCheckHistoryDao<VO extends XRegisterInfoCheckHistoryEntity> extends IXBaseDao<VO> {
+
+	public List<VO> findListBySerialNumber(String serialNumber);
+
+	/**
+	 * 
+	 * @param serialNumber
+	 * @param pcInfo
+	 * @param existFlg 0, 1
+	 * @return
+	 */
+	public VO saveHistory(String serialNumber, String pcInfo, String existFlg);
+}
