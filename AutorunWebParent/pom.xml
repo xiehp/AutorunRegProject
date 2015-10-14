@@ -1,0 +1,193 @@
+﻿<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>xie.web.autorun</groupId>
+	<artifactId>AutorunWebParent</artifactId>
+	<version>3.90.001</version>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>../AutorunWebBase</module>
+		<module>../AutorunWebApi</module>
+		<module>../AutorunWeb</module>
+	</modules>
+
+	<properties>
+		<!-- 文件拷贝时的编码 -->
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- 编译时的编码 -->
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+
+		<!-- Plugin的属性 -->
+		<tomcat-jdbc.version>7.0.57</tomcat-jdbc.version>
+
+		<!-- spring版本 -->
+		<spring.boot.version>1.2.6.RELEASE</spring.boot.version>
+		<spring.io.version>1.1.4.BUILD-SNAPSHOT</spring.io.version>
+
+		<!-- 主要依赖库的版本定义 -->
+		<springside.version>4.3.0-RELEASE</springside.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
+		<hibernate.version>4.3.8.Final</hibernate.version>
+		<spring-data-jpa.version>1.6.0.RELEASE</spring-data-jpa.version>
+		<sitemesh.version>2.4.2</sitemesh.version>
+		<shiro.version>1.2.3</shiro.version>
+		<ehcache.version>2.6.9</ehcache.version>
+		<hibernate-validator.version>5.0.3.Final</hibernate-validator.version>
+		<jackson.version>2.5.0</jackson.version>
+		<slf4j.version>1.7.8</slf4j.version>
+		<guava.version>18.0</guava.version>
+		<joda-time.version>2.3</joda-time.version>
+		<aspectj.version>1.8.4</aspectj.version>
+		
+		<!-- 测试 -->
+		<httpclient.version>4.4.1</httpclient.version>
+		<junit.version>4.11</junit.version>
+		<assertj.version>1.7.0</assertj.version>
+		<mockito.version>1.10.8</mockito.version>
+		<selenium.version>2.42.2</selenium.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/libs-snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>http://repo.spring.io/libs-snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- junit-io -->
+			<dependency>
+				<groupId>io.spring.platform</groupId>
+				<artifactId>platform-bom</artifactId>
+				<version>${spring.io.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- httpclient -->
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>fluent-hc</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient-cache</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore-ab</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore-nio</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpmime</artifactId>
+				<version>${httpclient.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- 定义使用jdk编译版本 UTF-8编译 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			
+			<!-- 打包前删除lib/MavenDependencies -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>ID_delete-MavenDependencies</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>lib/MavenDependencies</directory>
+								</fileset>
+							</filesets>
+							<excludeDefaultDirectories>true</excludeDefaultDirectories>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- 打包前向lib/MavenDependencies拷贝依赖包 -->
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>ID_copy-MavenDependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>lib/MavenDependencies</outputDirectory>
+							<excludeGroupIds>${project.groupId}</excludeGroupIds>
+							<excludeArtifactIds>${project.artifactId}</excludeArtifactIds>
+							<includeScope>runtime</includeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
