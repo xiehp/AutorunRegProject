@@ -5,7 +5,7 @@
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/pages/test/TestRegisterPage.jsp</welcome-file>
+		<welcome-file>WEB-INF/pages/test/TestRegisterPage.jsp</welcome-file>
 	</welcome-file-list>
 
 	<!-- 服务配置 -->

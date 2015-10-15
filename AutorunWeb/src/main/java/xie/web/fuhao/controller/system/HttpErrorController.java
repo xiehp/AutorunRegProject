@@ -12,6 +12,7 @@ public class HttpErrorController extends XBaseJsonController {
 
 	@RequestMapping(value = "/404")
 	public String Error404_1(HttpServletRequest request, HttpServletResponse response) {
+		request.setAttribute("requestURL", request.getRequestURL());
 		return "system/page404";
 	}
 

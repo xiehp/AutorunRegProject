@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("doRegister")
+@RequestMapping("register")
 public class XDoRegisterController extends XBaseJsonController {
 
 	@Resource

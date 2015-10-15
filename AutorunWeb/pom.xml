@@ -34,12 +34,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
+			<scope>compile</scope>
 		</dependency>
 		
 		<!-- spring-security
@@ -164,7 +164,7 @@
 		<finalName>AutorunWeb</finalName>
 		<defaultGoal>package</defaultGoal>
 		<plugins>
-			<!-- 定义spring-boot可执行jar -->
+			<!-- 定义spring-boot可执行jar 
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -180,7 +180,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 
 			<!--
 			<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId>
