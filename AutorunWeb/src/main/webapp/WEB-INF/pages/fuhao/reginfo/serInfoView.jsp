@@ -1,54 +1,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<script type="text/javascript">
-	function loadXMLDoc()
-	{
-		var xmlhttp;
-		var txt,x,i;
-		if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp=new XMLHttpRequest();
+	<script src="${pageContext.request.contextPath}/resource/js/site/ajax.js"></script>
+	<script>
+		function submitRegist() {
+			var registSerialNumber = document.getElementById("registSerialNumber").value;
+			requestAjax("${pageContext.request.contextPath}/register/registerInfo?serialNumber="+registSerialNumber, function(jsonData) {
+				document.getElementById("registResultSuccess").value = jsonData.success;
+				document.getElementById("registResultMessage").value = jsonData.message;
+				document.getElementById("registResultData").value = JSON.stringify(jsonData.result.data);
+			})
 		}
-		else
-		{// code for IE6, IE5
-			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange=function()
-		{
-			if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-				xmlDoc=xmlhttp.responseXML;
-				txt="";
-				x=xmlDoc.getElementsByTagName("title");
-				for (i=0;i<x.length;i++)
-				{
-					txt=txt + x[i].childNodes[0].nodeValue + "<br />";
-				}
-				document.getElementById("myDiv").innerHTML=txt;
-			}
-		}
-		xmlhttp.open("GET","/example/xmle/books.xml",true);
-		xmlhttp.send();
-	}
-</script>
+	</script>
 </head>
 <body>
 <br />
 <br />
 <br />
 <br />
-<form action="view">
+<form id="viewForm" action="${pageContext.request.contextPath}/RegInfo/view">
 	请输入要查看的注册码：<input name="serialNumber" value="${serialNumber}" />
 	<input type="submit">
 
 </form>
-<form action="regist">
-	请输入要注册的注册码：<input name="serialNumber" value="${serialNumber}" />
-	<input type="submit">
+<form id="registForm" action="${pageContext.request.contextPath}/register/registerInfo">
+	请输入要注册的注册码：<input id="registSerialNumber" value="${serialNumber}" />
+	<input type="button" onclick="submitRegist()" value="注册"><br>
 
+	结果：<input id="registResultSuccess"><br>
+	信息：<input id="registResultMessage"><br>
+	数据：<input id="registResultData"><br>
 </form>
 
 <p>
