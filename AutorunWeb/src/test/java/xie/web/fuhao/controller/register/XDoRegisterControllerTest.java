@@ -1,26 +1,19 @@
 package xie.web.fuhao.controller.register;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.fuhao.controller.base.ResponseJsonMap;
-import xie.web.fuhao.controller.base.XBaseController;
 import xie.web.fuhao.controller.base.XBaseJsonController;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("register")
-public class XDoRegisterController extends XBaseJsonController {
+public class XDoRegisterControllerTest extends XBaseJsonController {
 
 	@Resource
 	private IRegisterInfoService registerInfoService;

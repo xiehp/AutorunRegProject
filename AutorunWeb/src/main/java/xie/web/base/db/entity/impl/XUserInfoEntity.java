@@ -12,8 +12,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Entity
-@Table(name = "USER_INFO")
+@Entity(name = "USER_INFO")
+@Table
 //@Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 public class XUserInfoEntity implements Serializable {
 

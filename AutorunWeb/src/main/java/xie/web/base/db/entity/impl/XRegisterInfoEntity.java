@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import xie.web.base.db.entity.base.XBaseCommonEntity;
 
 @Entity(name = "Register_Info")
-//@Table(name = "Register_Info")
+@Table
 //@Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
 //public class XRegisterInfoEntity extends XBaseCommonEntity {
 public class XRegisterInfoEntity extends XBaseCommonEntity  {

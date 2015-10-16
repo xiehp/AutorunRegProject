@@ -5,12 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import xie.web.base.db.entity.base.XBaseCommonEntity;
 import xie.web.base.db.entity.base.XBaseEntity;
 
 @Entity(name = "Serial_Number_INFO")
-@Table(name = "Serial_Number_INFO")
+@Table
 //@Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class XSerialNumberEntity extends XBaseEntity {
+public class XSerialNumberEntity extends XBaseCommonEntity {
 
 	private static final long serialVersionUID = 1L;
 	

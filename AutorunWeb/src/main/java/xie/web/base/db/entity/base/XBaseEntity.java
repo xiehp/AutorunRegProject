@@ -2,6 +2,7 @@ package xie.web.base.db.entity.base;
 
 import java.lang.reflect.Field;
 
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
@@ -14,14 +15,14 @@ public abstract class XBaseEntity implements IXBaseEntity {
 
 	@Override
 	public String getTableName() {
-		Table tableAnnotation = this.getClass().getAnnotation(Table.class);
+		Entity tableAnnotation = this.getClass().getAnnotation(Entity.class);
 		if (tableAnnotation != null) {
 			return tableAnnotation.name();
 		}
 		return null;
 	}
 
-	public String getEntityString() {
+	public String toEntityString() {
 		StringBuilder sb = new StringBuilder("");
 
 		Field[] fields = getClass().getDeclaredFields();
@@ -51,6 +52,6 @@ public abstract class XBaseEntity implements IXBaseEntity {
 
 		XRegisterInfoEntity aaa = new XRegisterInfoEntity();
 //		System.out.println("TableName : " + aaa.getTableName());
-//		System.out.println(aaa.getEntityString());
+//		System.out.println(aaa.toEntityString());
 	}
 }
