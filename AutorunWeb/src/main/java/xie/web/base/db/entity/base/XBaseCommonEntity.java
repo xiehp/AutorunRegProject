@@ -5,21 +5,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import javax.persistence.Column;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.util.Date;
 
+@MappedSuperclass
+//@EntityListeners(value = EntityUserAndDateListener.class)
 public abstract class XBaseCommonEntity extends XBaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	Logger logger = LoggerFactory.getLogger(getClass());
+	//protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	@PrePersist
 	public void prePersist() {
-		logger.info("do prePersist");
+		//logger.info("do prePersist");
 		Date date = new Date();
 		String user = "system";
 		setCreatUser(user);
@@ -30,7 +29,7 @@ public abstract class XBaseCommonEntity extends XBaseEntity {
 
 	@PreUpdate
 	public void preUpdate() {
-		logger.info("do preUpdate");
+		//logger.info("do preUpdate");
 		Date date = new Date();
 		String user = "system";
 		setUpdateUser(user);

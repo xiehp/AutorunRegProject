@@ -1,11 +1,10 @@
 package xie.web.base.db.entity.impl;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import xie.web.base.db.entity.base.XBaseCommonEntity;
+
+import java.util.Date;
 
 @Entity(name = "Register_Info")
 @Table
