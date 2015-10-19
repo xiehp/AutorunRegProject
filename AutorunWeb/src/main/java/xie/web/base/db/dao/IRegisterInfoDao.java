@@ -13,6 +13,6 @@ import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 //@NoRepositoryBean
 public interface IRegisterInfoDao extends CrudRepository<XRegisterInfoEntity, Long> {
 
-	public XRegisterInfoEntity findBySerialNumber(String serialNumber);
+	XRegisterInfoEntity findBySerialNumber(String serialNumber);
 
 }

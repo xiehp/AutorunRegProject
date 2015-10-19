@@ -7,7 +7,7 @@
 		<script>
 			function submitRegist() {
 				var registSerialNumber = document.getElementById("registSerialNumber").value;
-				requestAjax("register/registerInfo?serialNumber="+registSerialNumber, function(jsonData) {
+				requestAjax("register/doRegisterInfo?serialNumber="+registSerialNumber, function(jsonData) {
 					document.getElementById("registResultSuccess").value = jsonData.success;
 					document.getElementById("registResultMessage").value = jsonData.message;
 					document.getElementById("registResultData").innerText = JSON.stringify(jsonData.result.data);
@@ -25,7 +25,7 @@
 		<input type="submit">
 
 	</form>
-	<form id="registForm" action="register/registerInfo">
+	<form id="registForm" action="register/doRegisterInfo">
 		请输入要注册的注册码：<input id="registSerialNumber" value="${serialNumber}" />
 		<input type="button" onclick="submitRegist()" value="注册"><br>
 

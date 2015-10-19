@@ -18,9 +18,9 @@ public class XDoRegisterControllerTest extends XBaseJsonController {
 	@Resource
 	private IRegisterInfoService registerInfoService;
 
-	@RequestMapping(value = "/registerInfo")
+	@RequestMapping(value = "/doRegisterInfo")
 	@ResponseBody
-	public ResponseJsonMap registerInfo(//HttpServletRequest request, HttpServletResponse response,
+	public ResponseJsonMap doRegisterInfo(//HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(defaultValue = "") String serialNumber, @RequestParam(defaultValue = "") String pcInfo) {
 
 		ResponseJsonMap responseJsonMap = createResponseJsonMap();
