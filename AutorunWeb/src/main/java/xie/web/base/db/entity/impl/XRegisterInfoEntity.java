@@ -6,30 +6,30 @@ import xie.web.base.db.entity.base.XBaseCommonEntity;
 
 import java.util.Date;
 
-@Entity(name = "Register_Info")
-@Table
+@Entity
+@Table(name = "Register_Info")
 //@Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
-//public class XRegisterInfoEntity extends XBaseCommonEntity {
 public class XRegisterInfoEntity extends XBaseCommonEntity  {
 
 	//private static final long serialVersionUID = -1993148360252911166L;
 
-	@Id
-	//@Column(name = "Register_Info_Id")
-	private Integer registerInfoId;
+	//@Column(name = "Serial_Number_Id")
+	private String serialNumberId;
 
 	//@Column(name = "Serial_Number")
 	private String serialNumber;
 
-	//@Column(name = "PC_Info")
+	@Column(name = "PcInfo")
 	private String pcInfo;
 
-	public Integer getRegisterInfoId() {
-		return registerInfoId;
+	private Date registDate;
+
+	public String getSerialNumberId() {
+		return serialNumberId;
 	}
 
-	public void setRegisterInfoId(final Integer registerInfoId) {
-		this.registerInfoId = registerInfoId;
+	public void setSerialNumberId(String serialNumberId) {
+		this.serialNumberId = serialNumberId;
 	}
 
 	public String getSerialNumber() {
@@ -46,5 +46,13 @@ public class XRegisterInfoEntity extends XBaseCommonEntity  {
 
 	public void setPcInfo(final String pcInfo) {
 		this.pcInfo = pcInfo;
+	}
+
+	public Date getRegistDate() {
+		return registDate;
+	}
+
+	public void setRegistDate(Date registDate) {
+		this.registDate = registDate;
 	}
 }

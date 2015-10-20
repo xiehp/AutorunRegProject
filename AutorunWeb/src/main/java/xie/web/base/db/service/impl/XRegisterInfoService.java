@@ -72,7 +72,6 @@ public class XRegisterInfoService implements IRegisterInfoService {
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public XRegisterInfoEntity register(String serialNumber, String pcInfo) {
 		XRegisterInfoEntity aaa = new XRegisterInfoEntity();
-		aaa.setRegisterInfoId((new Random()).nextInt(Integer.MAX_VALUE));
 		aaa.setSerialNumber(serialNumber);
 		aaa.setPcInfo(pcInfo);
 

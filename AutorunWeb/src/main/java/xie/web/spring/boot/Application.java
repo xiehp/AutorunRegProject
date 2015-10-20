@@ -36,7 +36,7 @@ public class Application implements CommandLineRunner {
 
 		XRegisterInfoEntity aaa = new XRegisterInfoEntity();
 		aaa.setSerialNumber("555666");
-		aaa.setRegisterInfoId(123123546);
+		aaa.setId("123123546");
 		aaa.setPcInfo("sdfsdfsd");
 		registerInfoService.register("gggg", "234sasad");
 		XRegisterInfoEntity vvv = registerInfoService.findBySerialNumber("gggg");

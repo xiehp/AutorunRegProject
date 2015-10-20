@@ -1,6 +1,7 @@
 package xie.web.base.db.entity.base;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.GenericGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +15,8 @@ public abstract class XBaseCommonEntity extends XBaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	//protected Logger logger = LoggerFactory.getLogger(getClass());
-
 	@PrePersist
 	public void prePersist() {
-		//logger.info("do prePersist");
 		Date date = new Date();
 		String user = "system";
 		setCreatUser(user);
@@ -29,12 +27,17 @@ public abstract class XBaseCommonEntity extends XBaseEntity {
 
 	@PreUpdate
 	public void preUpdate() {
-		//logger.info("do preUpdate");
 		Date date = new Date();
 		String user = "system";
 		setUpdateUser(user);
 		setUpdateDate(date);
 	}
+
+	@Id
+	@GeneratedValue(generator = "hibernate-uuid")
+	@GenericGenerator(name="hibernate-uuid", strategy="uuid")
+	@Column(name = "ID")
+	private String id;
 
 	/**
 	 * 用户分组标识
@@ -45,14 +48,14 @@ public abstract class XBaseCommonEntity extends XBaseEntity {
 	@Column(name = "CREAT_USER")
 	private String creatUser;
 
-	@JsonFormat(pattern = "yyyy年MM月dd日")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "CREATE_DATE")
 	private Date createDate;
 
 	@Column(name = "UPDATE_USER")
 	private String updateUser;
 
-	@JsonFormat(pattern = "yyyy年MM月dd日")
+	@JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "UPDATE_DATE")
 	private Date updateDate;
 
@@ -68,6 +71,14 @@ public abstract class XBaseCommonEntity extends XBaseEntity {
 	 */
 	@Column(name = "DELETE_FLAG")
 	private Integer deleteFlag;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public String getSiteId() {
 		return siteId;
