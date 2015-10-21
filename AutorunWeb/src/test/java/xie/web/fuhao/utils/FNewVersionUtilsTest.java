@@ -3,7 +3,7 @@ package xie.web.fuhao.utils;
 import java.io.File;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,7 +11,8 @@ public class FNewVersionUtilsTest {
 
 	@Test
 	public void testGetNewVersionFile() {
-		HttpClient httpClent = HttpClients.createDefault();
+		//HttpClient httpClent = HttpClients.createDefault();
+		HttpClient httpClient = new DefaultHttpClient();
 	}
 
 	@Test

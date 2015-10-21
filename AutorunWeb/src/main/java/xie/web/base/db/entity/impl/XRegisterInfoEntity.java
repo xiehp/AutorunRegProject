@@ -13,15 +13,16 @@ public class XRegisterInfoEntity extends XBaseCommonEntity  {
 
 	//private static final long serialVersionUID = -1993148360252911166L;
 
-	//@Column(name = "Serial_Number_Id")
+	@Column(name = "serialNumberId")
 	private String serialNumberId;
 
-	//@Column(name = "Serial_Number")
+	@Column(name = "serialNumber")
 	private String serialNumber;
 
 	@Column(name = "PcInfo")
 	private String pcInfo;
 
+	@Column(name = "registDate", nullable = false)
 	private Date registDate;
 
 	public String getSerialNumberId() {

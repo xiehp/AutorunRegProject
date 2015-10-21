@@ -21,16 +21,16 @@
 		<java.version>1.8</java.version>
 
 		<!-- Plugin的属性 -->
-		<tomcat-jdbc.version>7.0.57</tomcat-jdbc.version>
+		<!-- <tomcat-jdbc.version>7.0.57</tomcat-jdbc.version> -->
 
 		<!-- spring版本 -->
-		<spring.boot.version>1.2.6.RELEASE</spring.boot.version>
 		<spring.io.version>1.1.4.BUILD-SNAPSHOT</spring.io.version>
+		<spring.boot.version>1.2.7.RELEASE</spring.boot.version>
 
 		<!-- 主要依赖库的版本定义 -->
-		<springside.version>4.3.0-RELEASE</springside.version>
-		<spring.version>4.2.0.RELEASE</spring.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
+		<!-- <springside.version>4.3.0-RELEASE</springside.version>
+		<spring.version>4.2.0.RELEASE</spring.version>
 		<spring-data-jpa.version>1.6.0.RELEASE</spring-data-jpa.version>
 		<sitemesh.version>2.4.2</sitemesh.version>
 		<shiro.version>1.2.3</shiro.version>
@@ -40,14 +40,14 @@
 		<slf4j.version>1.7.8</slf4j.version>
 		<guava.version>18.0</guava.version>
 		<joda-time.version>2.3</joda-time.version>
-		<aspectj.version>1.8.4</aspectj.version>
+		<aspectj.version>1.8.4</aspectj.version> -->
 		
 		<!-- 测试 -->
-		<httpclient.version>4.4.1</httpclient.version>
-		<junit.version>4.11</junit.version>
+		<httpclient.version>4.2.5</httpclient.version>
+		<!-- <junit.version>4.11</junit.version>
 		<assertj.version>1.7.0</assertj.version>
 		<mockito.version>1.10.8</mockito.version>
-		<selenium.version>2.42.2</selenium.version>
+		<selenium.version>2.42.2</selenium.version> -->
 	</properties>
 
 	<repositories>
@@ -87,6 +87,7 @@
 				<scope>import</scope>
 			</dependency>
 
+			<!-- test -->
 			<!-- httpclient -->
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>

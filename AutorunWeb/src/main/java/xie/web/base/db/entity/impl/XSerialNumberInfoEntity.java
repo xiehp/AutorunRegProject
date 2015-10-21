@@ -13,11 +13,13 @@ public class XSerialNumberInfoEntity extends XBaseCommonEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(unique = true)
+	@Column(name = "serialNumber", unique = true)
 	private String serialNumber;
 
+	@Column(name = "maxRegistCount")
 	private Integer maxRegistCount;
 
+	@Column(name = "nowRegistCount")
 	private Integer nowRegistCount;
 
 	public String getSerialNumber() {
