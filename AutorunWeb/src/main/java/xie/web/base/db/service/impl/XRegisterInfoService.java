@@ -1,6 +1,6 @@
 package xie.web.base.db.service.impl;
 
-import java.util.Random;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -16,7 +16,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import xie.web.base.db.dao.IRegisterInfoDao;
+import xie.web.base.db.dao.ISerialNumberInfoDao;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
+import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 
 @Service
@@ -35,6 +37,8 @@ public class XRegisterInfoService implements IRegisterInfoService {
 	// private IRegisterInfoDao<XRegisterInfoEntity> registerInfoDao;
 	@Autowired
 	private IRegisterInfoDao registerInfoDao;
+	@Autowired
+	private ISerialNumberInfoDao serialNumberInfoDao;
 
 	@PostConstruct
 	public void postConstruct1() {
@@ -69,13 +73,37 @@ public class XRegisterInfoService implements IRegisterInfoService {
 		commonLogger.error("commonLogger preDestroy1 XRegisterInfoService XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 	}
 
+	/**
+	 * 保存当前注册信息和对应的机器信息。<br>
+	 * 同时更新注册码信息表。<br>
+	 * 如果没有就新增，有的话注册数量加1。<br>
+	 *
+	 * @param serialNumber
+	 * @param pcInfo
+	 * @return
+	 */
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
 	public XRegisterInfoEntity register(String serialNumber, String pcInfo) {
-		XRegisterInfoEntity aaa = new XRegisterInfoEntity();
-		aaa.setSerialNumber(serialNumber);
-		aaa.setPcInfo(pcInfo);
+		// 保存当前注册信息和对应的机器信息
+		XRegisterInfoEntity registerInfoEntity = new XRegisterInfoEntity();
+		registerInfoEntity.setSerialNumber(serialNumber);
+		registerInfoEntity.setPcInfo(pcInfo);
+		registerInfoEntity.setRegistDate(new Date());
+		registerInfoEntity = registerInfoDao.save(registerInfoEntity);
 
-		return registerInfoDao.save(aaa);
+		// 同时更新注册码信息表
+		XSerialNumberInfoEntity serialNumberInfoEntity = serialNumberInfoDao.findBySerialNumber();
+		if (serialNumberInfoEntity == null) {
+			serialNumberInfoEntity = new XSerialNumberInfoEntity();
+			serialNumberInfoEntity.setSerialNumber(serialNumber);
+			serialNumberInfoEntity.setMaxRegistCount(2);
+		}
+
+		int count = registerInfoDao.countBySerialNumber();
+		serialNumberInfoEntity.setNowRegistCount(count);
+		serialNumberInfoDao.save(serialNumberInfoEntity);
+
+		return registerInfoEntity;
 	}
 
 	public XRegisterInfoEntity findBySerialNumber(String serialNumber) {
