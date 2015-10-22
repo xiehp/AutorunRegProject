@@ -1,16 +1,14 @@
 package xie.web.base.db.dao.impl;
 
+import xie.web.base.db.dao.IRegisterInfoCheckHistoryDao;
+import xie.web.base.db.dao.base.XBaseDao_back;
+import xie.web.base.db.entity.impl.XRegisterInfoCheckHistoryEntity;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
-import xie.web.base.db.dao.IRegisterInfoCheckHistoryDao;
-import xie.web.base.db.dao.base.XBaseDao;
-import xie.web.base.db.entity.impl.XRegisterInfoCheckHistoryEntity;
-
 //@Repository
-public class XRegisterInfoCheckHistoryDao extends XBaseDao<XRegisterInfoCheckHistoryEntity> implements IRegisterInfoCheckHistoryDao<XRegisterInfoCheckHistoryEntity> {
+public class XRegisterInfoCheckHistoryDao extends XBaseDao_back<XRegisterInfoCheckHistoryEntity> implements IRegisterInfoCheckHistoryDao<XRegisterInfoCheckHistoryEntity> {
 
 	private static final long serialVersionUID = 1L;
 

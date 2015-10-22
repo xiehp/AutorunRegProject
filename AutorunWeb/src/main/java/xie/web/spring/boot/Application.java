@@ -5,10 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import xie.web.base.db.dao.IRegisterInfoDao;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
@@ -42,7 +38,7 @@ public class Application implements CommandLineRunner {
 		aaa.setPcInfo("sdfsdfsd");
 		aaa.setRegistDate(new Date());
 		registerInfoService.register("gggg", "234sasad");
-		XRegisterInfoEntity vvv = registerInfoService.findBySerialNumber("gggg");
+		XRegisterInfoEntity vvv = registerInfoService.findBySerialNumberAndPcInfo("gggg", "234sasad");
 		System.out.println(vvv.getSerialNumber());
 
 		// save a couple of customers

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import xie.web.base.db.dao.ISerialNumberInfoDao;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
+import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.fuhao.controller.base.ResponseJsonMap;
 import xie.web.fuhao.controller.base.XBaseController;
@@ -22,6 +24,8 @@ public class XCheckRegisterController extends XBaseJsonController {
 
 	@Autowired
 	private IRegisterInfoService registerInfoService;
+	@Autowired
+	private ISerialNumberInfoDao serialNumberInfoDao;
 
 	/**
 	 * 检查是否已经注册<br>
@@ -33,7 +37,7 @@ public class XCheckRegisterController extends XBaseJsonController {
 	public ResponseJsonMap checkRegister(@RequestParam String serialNumber) {
 		ResponseJsonMap responseJsonMap = createResponseJsonMap();
 
-		XRegisterInfoEntity entity = registerInfoService.findBySerialNumber(serialNumber);
+		XSerialNumberInfoEntity entity = serialNumberInfoDao.findBySerialNumber(serialNumber);
 		responseJsonMap.getResult().put("data", entity);
 
 		return responseJsonMap;
@@ -49,7 +53,7 @@ public class XCheckRegisterController extends XBaseJsonController {
 	public ResponseJsonMap getRegisterInfo(@RequestParam String serialNumber, HttpServletRequest request) {
 		ResponseJsonMap responseJsonMap = createResponseJsonMap();
 
-		XRegisterInfoEntity entity = registerInfoService.findBySerialNumber(serialNumber);
+		XSerialNumberInfoEntity entity = serialNumberInfoDao.findBySerialNumber(serialNumber);
 		responseJsonMap.getResult().put("data", entity);
 
 		return responseJsonMap;
