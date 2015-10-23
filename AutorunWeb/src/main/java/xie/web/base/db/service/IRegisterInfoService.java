@@ -6,5 +6,7 @@ public interface IRegisterInfoService {
 
 	XRegisterInfoEntity register(String serialNumber, String pcInfo);
 
-	XRegisterInfoEntity findBySerialNumber(String serialNumber);
+	XRegisterInfoEntity findById(String Id);
+
+	XRegisterInfoEntity findBySerialNumberAndPcInfo(String serialNumber, String pcInfo);
 }

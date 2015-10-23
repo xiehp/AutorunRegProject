@@ -3,15 +3,13 @@ package xie.web.base.db.entity.base;
 import java.lang.reflect.Field;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
+import xie.web.base.XLoggerClass;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 
-public abstract class XBaseEntity implements IXBaseEntity {
+public abstract class XBaseEntity extends XLoggerClass implements IXBaseEntity {
 
 	private static final long serialVersionUID = 1L;
-
-	String ggggggggggggggg = "FGFFFFFFF";
 
 	@Override
 	public String getTableName() {

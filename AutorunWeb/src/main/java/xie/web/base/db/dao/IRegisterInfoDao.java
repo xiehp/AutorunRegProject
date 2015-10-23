@@ -1,19 +1,15 @@
 package xie.web.base.db.dao;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.NoRepositoryBean;
-
+import org.springframework.stereotype.Repository;
+import xie.web.base.db.dao.base.IXBaseDao;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 
-//public interface IRegisterInfoDao<VO extends XRegisterInfoEntity> extends IXBaseDao<VO> {
-//
-//	public VO findBySerialNumber(String serialNumber);
-//}
+@Repository
+public interface IRegisterInfoDao extends IXBaseDao<XRegisterInfoEntity, String> {
 
-//@NoRepositoryBean
-public interface IRegisterInfoDao extends CrudRepository<XRegisterInfoEntity, Long> {
+	int countBySerialNumber(String serialNumber);
 
-	XRegisterInfoEntity findBySerialNumber(String serialNumber);
+	int countBySerialNumberId(String serialNumberId);
 
-	int countBySerialNumber();
+	XRegisterInfoEntity findBySerialNumberAndPcInfo(String serialNumber, String pcInfo);
 }

@@ -1,16 +1,11 @@
 package xie.web.base.db.dao;
 
-import org.springframework.data.repository.CrudRepository;
-import xie.web.base.db.entity.impl.XRegisterInfoEntity;
+import org.springframework.stereotype.Repository;
+import xie.web.base.db.dao.base.IXBaseDao;
 import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 
-//public interface IRegisterInfoDao<VO extends XRegisterInfoEntity> extends IXBaseDao<VO> {
-//
-//	public VO findBySerialNumber(String serialNumber);
-//}
+@Repository
+public interface ISerialNumberInfoDao extends IXBaseDao<XSerialNumberInfoEntity, String> {
 
-//@NoRepositoryBean
-public interface ISerialNumberInfoDao extends CrudRepository<XSerialNumberInfoEntity, Long> {
-
-	XSerialNumberInfoEntity findBySerialNumber();
+	XSerialNumberInfoEntity findBySerialNumber(String serialNumber);
 }

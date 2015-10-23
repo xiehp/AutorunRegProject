@@ -1,50 +1,26 @@
 package xie.web.fuhao.controller.register;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
+import xie.web.base.db.service.ISerialNumberInfoService;
 import xie.web.fuhao.controller.base.ResponseJsonMap;
 import xie.web.fuhao.controller.base.XBaseJsonController;
 
 import javax.annotation.Resource;
 
-@Controller
-@RequestMapping("register")
 public class XDoRegisterControllerTest extends XBaseJsonController {
 
 	@Resource
 	private IRegisterInfoService registerInfoService;
+	@Resource
+	private ISerialNumberInfoService serialNumberInfoService;
 
-	@RequestMapping(value = "/doRegisterInfo")
-	@ResponseBody
 	public ResponseJsonMap doRegisterInfo(//HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(defaultValue = "") String serialNumber, @RequestParam(defaultValue = "") String pcInfo) {
 
 		ResponseJsonMap responseJsonMap = createResponseJsonMap();
-		// 检查注册码是否已经存在
-		XRegisterInfoEntity checkResult = registerInfoService.findBySerialNumber(serialNumber);
-		if (checkResult != null) {
-			responseJsonMap.setSuccess(false);
-			responseJsonMap.setMessage("该注册码已经被注册过了， 无法继续使用。");
-			responseJsonMap.getResult().put("data", checkResult);
-			return responseJsonMap;
-		}
-
-		// 进行注册
-		XRegisterInfoEntity registerResult = registerInfoService.register(serialNumber, pcInfo);
-		if (registerResult == null) {
-			responseJsonMap.setSuccess(false);
-			responseJsonMap.setMessage("注册失败。");
-			return responseJsonMap;
-		}
-
-		// 返回结果
-		//return registerResult.toEntityString();
-		responseJsonMap.setMessage("注册成功。");
-		responseJsonMap.getResult().put("data", registerResult);
 		return responseJsonMap;
 	}
 
