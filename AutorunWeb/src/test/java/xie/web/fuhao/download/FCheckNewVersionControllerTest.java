@@ -10,8 +10,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -40,7 +39,8 @@ public class FCheckNewVersionControllerTest {
 
 	@Test
 	public void testGetNewVersion() throws ClientProtocolException, IOException {
-		HttpClient httpClient = HttpClientBuilder.create().build();
+		//HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpPost = new HttpGet("http://localhost:8080/AutorunWeb/fuhao/check/getNewVersion");
 
 		HttpResponse response = httpClient.execute(httpPost);
@@ -56,7 +56,8 @@ public class FCheckNewVersionControllerTest {
 
 	@Test
 	public void testGetNewVersionName() throws ClientProtocolException, IOException {
-		HttpClient httpClient = HttpClientBuilder.create().build();
+		//HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpPost = new HttpGet("http://localhost:8080/AutorunWeb/fuhao/check/getNewVersionName");
 
 		HttpResponse response = httpClient.execute(httpPost);
@@ -80,7 +81,8 @@ public class FCheckNewVersionControllerTest {
 
 	@Test
 	public void testGetNewVersionLastModify() throws ClientProtocolException, IOException {
-		HttpClient httpClient = HttpClientBuilder.create().build();
+		//HttpClient httpClient = HttpClientBuilder.create().build();
+		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpPost = new HttpGet("http://localhost:8080/AutorunWeb/fuhao/check/getNewVersionLastModify");
 
 		HttpResponse response = httpClient.execute(httpPost);

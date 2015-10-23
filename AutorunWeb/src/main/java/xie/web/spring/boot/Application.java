@@ -15,6 +15,8 @@ import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.study.Customer;
 import xie.web.study.CustomerRepository;
 
+import java.util.Date;
+
 //@SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -36,8 +38,9 @@ public class Application implements CommandLineRunner {
 
 		XRegisterInfoEntity aaa = new XRegisterInfoEntity();
 		aaa.setSerialNumber("555666");
-		aaa.setRegisterInfoId(123123546);
+		aaa.setId("123123546");
 		aaa.setPcInfo("sdfsdfsd");
+		aaa.setRegistDate(new Date());
 		registerInfoService.register("gggg", "234sasad");
 		XRegisterInfoEntity vvv = registerInfoService.findBySerialNumber("gggg");
 		System.out.println(vvv.getSerialNumber());

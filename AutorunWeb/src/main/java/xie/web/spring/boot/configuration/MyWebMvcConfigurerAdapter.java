@@ -1,18 +1,13 @@
 package xie.web.spring.boot.configuration;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import xie.web.spring.boot.UserSecurityInterceptor;
+import xie.web.spring.boot.interceptor.WebPageInterceptor;
 
 @Configuration
 // @EnableWebMvc
@@ -30,7 +25,7 @@ public class MyWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		UserSecurityInterceptor userSecurityInterceptor = new UserSecurityInterceptor();
+		WebPageInterceptor userSecurityInterceptor = new WebPageInterceptor();
 		registry.addInterceptor(userSecurityInterceptor);
 		logger.info("MyWebMvcConfigurerAdapter.addInterceptors");
 	}

@@ -1,9 +1,8 @@
 package xie.web.base.db.dao;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.NoRepositoryBean;
-
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
+import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 
 //public interface IRegisterInfoDao<VO extends XRegisterInfoEntity> extends IXBaseDao<VO> {
 //
@@ -11,9 +10,7 @@ import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 //}
 
 //@NoRepositoryBean
-public interface IRegisterInfoDao extends CrudRepository<XRegisterInfoEntity, Long> {
+public interface ISerialNumberInfoDao extends CrudRepository<XSerialNumberInfoEntity, Long> {
 
-	XRegisterInfoEntity findBySerialNumber(String serialNumber);
-
-	int countBySerialNumber();
+	XSerialNumberInfoEntity findBySerialNumber();
 }

@@ -1,36 +1,36 @@
 package xie.web.base.db.entity.impl;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import xie.web.base.db.entity.base.XBaseCommonEntity;
 
-@Entity(name = "Register_Info")
-//@Table(name = "Register_Info")
+import java.util.Date;
+
+@Entity
+@Table(name = "Register_Info")
 //@Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
-//public class XRegisterInfoEntity extends XBaseCommonEntity {
 public class XRegisterInfoEntity extends XBaseCommonEntity  {
 
 	//private static final long serialVersionUID = -1993148360252911166L;
 
-	@Id
-	//@Column(name = "Register_Info_Id")
-	private Integer registerInfoId;
+	@Column(name = "Serial_Number_Id")
+	private String serialNumberId;
 
-	//@Column(name = "Serial_Number")
+	@Column(name = "Serial_Number")
 	private String serialNumber;
 
-	//@Column(name = "PC_Info")
+	@Column(name = "Pc_Info")
 	private String pcInfo;
 
-	public Integer getRegisterInfoId() {
-		return registerInfoId;
+	@Column(name = "Regist_Date", nullable = false)
+	private Date registDate;
+
+	public String getSerialNumberId() {
+		return serialNumberId;
 	}
 
-	public void setRegisterInfoId(final Integer registerInfoId) {
-		this.registerInfoId = registerInfoId;
+	public void setSerialNumberId(String serialNumberId) {
+		this.serialNumberId = serialNumberId;
 	}
 
 	public String getSerialNumber() {
@@ -47,5 +47,13 @@ public class XRegisterInfoEntity extends XBaseCommonEntity  {
 
 	public void setPcInfo(final String pcInfo) {
 		this.pcInfo = pcInfo;
+	}
+
+	public Date getRegistDate() {
+		return registDate;
+	}
+
+	public void setRegistDate(Date registDate) {
+		this.registDate = registDate;
 	}
 }

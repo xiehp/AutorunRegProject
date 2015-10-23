@@ -17,7 +17,7 @@ import xie.web.fuhao.controller.base.XBaseJsonController;
 import java.util.Map;
 
 @Controller
-@RequestMapping("checkRegister")
+@RequestMapping("register")
 public class XCheckRegisterController extends XBaseJsonController {
 
 	@Autowired
@@ -30,8 +30,13 @@ public class XCheckRegisterController extends XBaseJsonController {
 	 */
 	@RequestMapping("checkRegister")
 	@ResponseBody
-	public String checkRegister() {
-		return "checkRegister";
+	public ResponseJsonMap checkRegister(@RequestParam String serialNumber) {
+		ResponseJsonMap responseJsonMap = createResponseJsonMap();
+
+		XRegisterInfoEntity entity = registerInfoService.findBySerialNumber(serialNumber);
+		responseJsonMap.getResult().put("data", entity);
+
+		return responseJsonMap;
 	}
 
 	/**
@@ -41,21 +46,11 @@ public class XCheckRegisterController extends XBaseJsonController {
 	 */
 	@RequestMapping("getRegisterInfo")
 	@ResponseBody
-	public ResponseJsonMap getRegisterTime(@RequestParam String serialNumber, HttpServletRequest httpServletRequest) {
-//		ServletContext servletContext = httpServletRequest.getSession().getServletContext();
-//		System.out.println(servletContext.getMajorVersion());
-//
-//		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getWebApplicationContext(servletContext);
-//		// webApplicationContext.containsBean(arg0)
-//		registerInfoService = webApplicationContext.getBean(XRegisterInfoService.class);
-
-
+	public ResponseJsonMap getRegisterInfo(@RequestParam String serialNumber, HttpServletRequest request) {
 		ResponseJsonMap responseJsonMap = createResponseJsonMap();
 
 		XRegisterInfoEntity entity = registerInfoService.findBySerialNumber(serialNumber);
-		if (entity != null) {
-			responseJsonMap.getResult().put("data", entity);
-		}
+		responseJsonMap.getResult().put("data", entity);
 
 		return responseJsonMap;
 	}

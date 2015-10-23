@@ -13,13 +13,16 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xie.web.fuhao.controller.base.XBaseController;
 import xie.web.fuhao.utils.FNewVersionUtils;
 import xie.web.fuhao.utils.FWebUtils;
 
 public class XDownloadNewVersionController extends XBaseController {
 
-	private static final long serialVersionUID = 1L;
+	private Logger logger = LoggerFactory.getLogger(getClass());
+
 
 	protected void doDownloadFile(File lastModifiedFile, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -29,6 +32,7 @@ public class XDownloadNewVersionController extends XBaseController {
 			Date nowDate = new Date();
 			nowDateStr = format.format(nowDate);
 			System.out.println(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
+			logger.info(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
 			// 返回给客户端
 			resp.setContentType("application/x-msdownload");
 			resp.setContentLength((int) lastModifiedFile.length());
@@ -54,9 +58,11 @@ public class XDownloadNewVersionController extends XBaseController {
 				nowDateStr = format.format(overDate);
 				if (e.getClass().getName().contains("ClientAbortException")) {
 					hasClientAbortException = true;
-					System.out.println(overDate + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+					System.out.println(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+					logger.warn(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
 				} else {
-					System.out.println(overDate + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+					System.out.println(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+					logger.error(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
 					throw e;
 				}
 			} finally {
@@ -78,15 +84,18 @@ public class XDownloadNewVersionController extends XBaseController {
 			if (!hasClientAbortException) {
 				Date overDate = new Date();
 				nowDateStr = format.format(overDate);
-				System.out.println(overDate + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				System.out.println(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				logger.info(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
 			}
 		} else {
 			if (lastModifiedFile == null) {
 				resp.getWriter().print("没有需要传送的文件。");
 				System.out.println(nowDateStr + " 没有需要传送的文件。");
+				logger.info(nowDateStr + " 没有需要传送的文件。");
 			} else {
 				resp.getWriter().print("没有找到可以传送的文件。");
 				System.out.println(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
+				logger.warn(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
 			}
 		}
 
@@ -96,8 +105,10 @@ public class XDownloadNewVersionController extends XBaseController {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String nowDateStr = format.format(new Date());
+		String printStr = nowDateStr + " 开始接受请求：" + req.getRemoteAddr() + ":" + req.getRemotePort() + " " + req.getRemoteHost() + " " + req.getHeader("x-forwarded-for");
 		System.out.println();
-		System.out.println(nowDateStr + " 开始接受请求：" + req.getRemoteAddr() + ":" + req.getRemotePort() + " " + req.getRemoteHost() + " " + req.getHeader("x-forwarded-for"));
+		System.out.println(printStr);
+		logger.info(printStr);
 
 		File lastModifiedFile = FNewVersionUtils.getNewVersionFile(req);
 

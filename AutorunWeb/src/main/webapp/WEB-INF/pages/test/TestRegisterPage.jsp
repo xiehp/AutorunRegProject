@@ -9,11 +9,11 @@
 
 <script type="text/javascript">
 	function registetr() {
-		post("/fuhao/doRegister/registerInfo");
+		post("register/doRegisterInfo");
 	}
 
 	function check() {
-		post("/fuhao/checkRegister/getRegisterInfo");
+		post("register/getRegisterInfo");
 	}
 	
 	function post(url) {

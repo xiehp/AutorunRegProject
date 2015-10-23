@@ -1,4 +1,4 @@
-package xie.web.spring.boot;
+package xie.web.spring.boot.interceptor;
 
 import java.util.List;
 
@@ -11,9 +11,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import xie.web.utils.HttpUtils;
 
 @Configuration
-public class UserSecurityInterceptor extends HandlerInterceptorAdapter {
+public class WebPageInterceptor extends HandlerInterceptorAdapter {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -22,13 +23,16 @@ public class UserSecurityInterceptor extends HandlerInterceptorAdapter {
 	private String includeUrl;
 
 	@Override
-	public boolean preHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2) throws Exception {
-		
-		logger.info("UserSecurityInterceptor.preHandle, includeUrl:" + includeUrl + ", " + arg0.getRequestURL());
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse arg1, Object arg2) throws Exception {
+		logger.info("WebPageInterceptor.preHandle, includeUrl: {}, nowUrl:{}", includeUrl, request.getRequestURL());
 
-		String servletPath = arg0.getServletPath();
+		// 放入contextPath的Url
+		request.setAttribute("contextPathURL", HttpUtils.getContextPathUrl(request));
+
+
+		String servletPath = request.getServletPath();
 		if (includeUrl != null && includeUrl.equals(servletPath)) {
-			logger.info("UserSecurityInterceptor.preHandle " + arg0.getRequestURL());
+			logger.info("WebPageInterceptor.preHandle " + request.getRequestURL());
 		}
 		
 		return true;
@@ -37,13 +41,13 @@ public class UserSecurityInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
-		//logger.info("UserSecurityInterceptor.postHandle, includeUrl:" + includeUrl + ", " + request.getRequestURL());
+		//logger.info("WebPageInterceptor.postHandle, includeUrl:" + includeUrl + ", " + request.getRequestURL());
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 
-		//logger.info("UserSecurityInterceptor.afterCompletion, includeUrl:" + includeUrl + ", " + request.getRequestURL());
+		//logger.info("WebPageInterceptor.afterCompletion, includeUrl:" + includeUrl + ", " + request.getRequestURL());
 	}
 
 	public List<String> getExcludedUrls() {

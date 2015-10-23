@@ -42,7 +42,7 @@
 
 	<build>
 		<plugins>
-			<!-- 定义使用1.6 UTF-8编译 -->
+			<!-- 定义使用1.8 UTF-8编译 -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -52,6 +52,24 @@
 					<target>${java.version}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
+			</plugin>
+
+			<!-- 定义spring-boot可执行jar -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.2.6.RELEASE</version>
+				<configuration>
+					<mainClass>app.SpringBootAdminStart</mainClass>
+					<layout>ZIP</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

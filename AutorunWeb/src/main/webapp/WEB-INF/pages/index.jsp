@@ -3,6 +3,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 </head>
 <body>
+
+<br /><br />
+<br /><br />
+	<a href="RegInfo/view">注册信息</a>
+
+
+
+
+
+
+
+
 	<h2>\webapp\WEB-INF\pages的index.jsp</h2>
 	request.getContextPath(): <%=request.getContextPath() %><br />
 	request.getRequestURI(): <%=request.getRequestURI() %><br />
