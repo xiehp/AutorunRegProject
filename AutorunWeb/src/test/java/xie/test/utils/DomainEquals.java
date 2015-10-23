@@ -21,9 +21,9 @@ public class DomainEquals {
 	/**
 	 * 比较两个BEAN或MAP对象的值是否相等 如果是BEAN与MAP对象比较时MAP中的key值应与BEAN的属性值名称相同且字段数目要一致
 	 *
-	 * @param source
-	 * @param target
-	 * @return
+	 * @param source source
+	 * @param target target
+	 * @return boolean
 	 */
 	public static boolean domainEquals(Object source, Object target) {
 		if (source == null || target == null) {
@@ -42,10 +42,10 @@ public class DomainEquals {
 	/**
 	 * 源目标为MAP类型时
 	 *
-	 * @param source
-	 * @param target
-	 * @param rv
-	 * @return
+	 * @param source source
+	 * @param target target
+	 * @param rv rv
+	 * @return boolean
 	 */
 	private static boolean mapOfSrc(Object source, Object target, boolean rv) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -76,10 +76,10 @@ public class DomainEquals {
 	/**
 	 * 源目标为非MAP类型时
 	 *
-	 * @param source
-	 * @param target
-	 * @param rv
-	 * @return
+	 * @param source source
+	 * @param target target
+	 * @param rv rv
+	 * @return boolean
 	 */
 	private static boolean classOfSrc(Object source, Object target, boolean rv) {
 		Class<?> srcClass = source.getClass();
@@ -113,9 +113,9 @@ public class DomainEquals {
 	/**
 	 * 根据字段名称取值
 	 *
-	 * @param obj
-	 * @param fieldName
-	 * @return
+	 * @param obj obj
+	 * @param fieldName fieldName
+	 * @return Object
 	 */
 	public static Object getClassValue(Object obj, String fieldName) {
 		if (obj == null) {

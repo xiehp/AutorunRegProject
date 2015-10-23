@@ -24,8 +24,8 @@ public class XDownloadNewVersionServlet extends HttpServlet {
 
 	/**
 	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 * @param req
-	 * @param resp
+	 * @param request request
+	 * @param response response
 	 * @throws ServletException
 	 * @throws IOException
 	 * @since 2014-11-26下午11:11:48
@@ -38,8 +38,8 @@ public class XDownloadNewVersionServlet extends HttpServlet {
 
 	/**
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 * @param req
-	 * @param resp
+	 * @param request request
+	 * @param response response
 	 * @throws ServletException
 	 * @throws IOException
 	 * @since 2014-11-26下午11:11:55

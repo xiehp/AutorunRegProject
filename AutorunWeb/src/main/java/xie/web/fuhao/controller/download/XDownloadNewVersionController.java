@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package xie.web.fuhao.controller.download;
 
@@ -25,83 +25,6 @@ public class XDownloadNewVersionController extends XBaseController {
 
 
 	protected void doDownloadFile(File lastModifiedFile, HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String nowDateStr = format.format(new Date());
-
-		if (lastModifiedFile != null && lastModifiedFile.exists()) {
-			Date nowDate = new Date();
-			nowDateStr = format.format(nowDate);
-			System.out.println(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
-			logger.info(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
-			// 返回给客户端
-			resp.setContentType("application/x-msdownload");
-			resp.setContentLength((int) lastModifiedFile.length());
-
-			resp.setHeader("Content-Disposition", "attachment;filename=" + FWebUtils.encodeBrowserFileName(req.getHeader("user-agent"), lastModifiedFile.getName()));
-
-			byte[] bufferByte = new byte[10000];
-			long hasDownloadLen = 0;
-			OutputStream os = null;
-			FileInputStream fis = null;
-			boolean hasClientAbortException = false;
-			try {
-				os = resp.getOutputStream();
-				fis = new FileInputStream(lastModifiedFile);
-				int readLen = 0;
-				while ((readLen = fis.read(bufferByte)) != -1) {
-					hasDownloadLen += readLen;
-					os.write(bufferByte, 0, readLen);
-				}
-				os.flush();
-			} catch (IOException e) {
-				Date overDate = new Date();
-				nowDateStr = format.format(overDate);
-				if (e.getClass().getName().contains("ClientAbortException")) {
-					hasClientAbortException = true;
-					System.out.println(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-					logger.warn(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-				} else {
-					System.out.println(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-					logger.error(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-					throw e;
-				}
-			} finally {
-				if (fis != null) {
-					try {
-						fis.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				if (os != null && !hasClientAbortException) {
-					try {
-						os.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			if (!hasClientAbortException) {
-				Date overDate = new Date();
-				nowDateStr = format.format(overDate);
-				System.out.println(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-				logger.info(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-			}
-		} else {
-			if (lastModifiedFile == null) {
-				resp.getWriter().print("没有需要传送的文件。");
-				System.out.println(nowDateStr + " 没有需要传送的文件。");
-				logger.info(nowDateStr + " 没有需要传送的文件。");
-			} else {
-				resp.getWriter().print("没有找到可以传送的文件。");
-				System.out.println(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
-				logger.warn(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
-			}
-		}
-
-	}
-
-	protected void doDownloadNewVersion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String nowDateStr = format.format(new Date());
@@ -110,8 +33,100 @@ public class XDownloadNewVersionController extends XBaseController {
 		System.out.println(printStr);
 		logger.info(printStr);
 
-		File lastModifiedFile = FNewVersionUtils.getNewVersionFile(req);
+		if (lastModifiedFile == null) {
+			resp.getWriter().print("传送的文件为空。");
+			System.out.println(nowDateStr + " 传送的文件为空。");
+			logger.info(nowDateStr + " 传送的文件为空。");
+		}
 
+		if (!lastModifiedFile.exists()) {
+			resp.getWriter().print("没有找到可以传送的文件。" + lastModifiedFile.getName());
+			System.out.println(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
+			logger.warn(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
+		}
+
+		Date nowDate = new Date();
+		nowDateStr = format.format(nowDate);
+		System.out.println(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
+		logger.info(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
+		// 返回给客户端
+		resp.setContentType("application/x-msdownload");
+		resp.setContentLength((int) lastModifiedFile.length());
+
+		resp.setHeader("Content-Disposition", "attachment;filename=" + FWebUtils.encodeBrowserFileName(req.getHeader("user-agent"), lastModifiedFile.getName()));
+
+		byte[] bufferByte = new byte[1024 * 8];
+		//long hasDownloadLen = 0;
+		OutputStream os = null;
+		FileInputStream fis = null;
+		boolean hasClientAbortException = false;
+		try {
+			os = resp.getOutputStream();
+			fis = new FileInputStream(lastModifiedFile);
+			int readLen;
+			while ((readLen = fis.read(bufferByte)) != -1) {
+				//hasDownloadLen += readLen;
+				os.write(bufferByte, 0, readLen);
+			}
+			os.flush();
+		} catch (IOException e) {
+			Date overDate = new Date();
+			nowDateStr = format.format(overDate);
+			if (e.getClass().getName().contains("ClientAbortException")) {
+				hasClientAbortException = true;
+				System.out.println(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				logger.warn(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+			} else {
+				System.out.println(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				logger.error(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				throw e;
+			}
+		} finally {
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			if (os != null && !hasClientAbortException) {
+				try {
+					os.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		if (!hasClientAbortException) {
+			Date overDate = new Date();
+			nowDateStr = format.format(overDate);
+			System.out.println(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+			logger.info(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+		}
+	}
+
+	/**
+	 * 下载最新版本的主程序文件。
+	 *
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 */
+	protected void doDownloadNewVersion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		File lastModifiedFile = FNewVersionUtils.getNewVersionFile(req);
+		doDownloadFile(lastModifiedFile, req, resp);
+	}
+
+	/**
+	 * 通过文件名下载文件
+	 *
+	 * @param fileName
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 */
+	protected void doDownloadFile(String fileName, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		File lastModifiedFile = new File(fileName);
 		doDownloadFile(lastModifiedFile, req, resp);
 	}
 }
