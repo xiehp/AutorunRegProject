@@ -10,8 +10,9 @@ public class FNewVersionUtils {
 
 	public static File getFile(String fileName, HttpServletRequest req) {
 		File rootFolder = getDownloadRootFolder(req);
+		File file = new File(rootFolder, fileName);
 
-		return lastModifiedFile;
+		return file;
 	}
 
 	public static File getNewVersionFile(HttpServletRequest req) {
