@@ -19,8 +19,8 @@ public class FDownloadNewVersionController extends XDownloadNewVersionController
 	private static final long serialVersionUID = 1L;
 
 	@RequestMapping("downloadNewVersion")
-	public void downloadNewVersion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		doDownloadNewVersion(req, resp);
+	public void downloadNewVersion(@RequestParam(required=false) String clientVersion, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		doDownloadNewVersion(clientVersion, req, resp);
 	}
 
 	@RequestMapping("downloadFile")

@@ -112,8 +112,8 @@ public class XDownloadNewVersionController extends XBaseController {
 	 * @param resp
 	 * @throws IOException
 	 */
-	protected void doDownloadNewVersion(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		File lastModifiedFile = FNewVersionUtils.getNewVersionFile(req);
+	protected void doDownloadNewVersion(String clientVersion, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		File lastModifiedFile = FNewVersionUtils.getNewVersionFile(clientVersion, req);
 		doDownloadFile(lastModifiedFile, req, resp);
 	}
 

@@ -6,7 +6,18 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+//@Component
 public class FNewVersionUtils {
+	
+//	@Value("${Ver390RarFileName}")
+//	private String Ver390RarFileName;
+//	
+//	@Autowired
+//	private FNewVersionUtils versionUtils;
 
 	public static File getFile(String fileName, HttpServletRequest req) {
 		File rootFolder = getDownloadRootFolder(req);
@@ -15,9 +26,25 @@ public class FNewVersionUtils {
 		return file;
 	}
 
-	public static File getNewVersionFile(HttpServletRequest req) {
+	/**
+	 * 如果没有版本号，直接返回3.90的rar完整包包<br>
+	 * 否则获取目录中，更新日期最新的文件<br>
+	 * 
+	 * @param clientVersion
+	 * @param req
+	 * @return
+	 */
+	public static File getNewVersionFile(String clientVersion, HttpServletRequest req) {
+
+		// 获取下载目录
 		File rootFolder = getDownloadRootFolder(req);
 
+		// 如果没有版本号，直接返回3.90的rar完整包包
+		if (clientVersion == null || clientVersion.trim().length() == 0) {
+			return new File(rootFolder, "大富豪3.90完全安装包.rar"); // TODO 改到配置文件中
+		}
+
+		// 获取下载目录中，更新日期最新的文件
 		File lastModifiedFile = null;
 		if (rootFolder.exists()) {
 			File[] files = rootFolder.listFiles();

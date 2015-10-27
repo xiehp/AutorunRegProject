@@ -45,10 +45,22 @@ public class AutoRunWebStart extends SpringBootServletInitializer {
 	@Autowired
 	private MyConfig myConfig;
 
+	public static void main(String[] args) {
+		Object[] objects = new Object[] { AutoRunWebStart.class };
+		// SpringApplication.run(objects, args);
+
+		springApplication = new SpringApplication(objects);
+		// springApplication.setWebEnvironment(false);
+
+		// springApplication.setAdditionalProfiles("AAA");
+
+		springApplication.run(args);
+	}
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		//return application.sources(SpringApplication.class);
-        return application.sources(AutoRunWebStart.class);  
+		// return application.sources(SpringApplication.class);
+		return application.sources(AutoRunWebStart.class);
 	}
 
 	@Override
@@ -84,18 +96,6 @@ public class AutoRunWebStart extends SpringBootServletInitializer {
 		public void customize(ConfigurableEmbeddedServletContainer container) {
 			container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
 		}
-	}
-
-	public static void main(String[] args) {
-		Object[] objects = new Object[] { AutoRunWebStart.class };
-		// SpringApplication.run(objects, args);
-
-		springApplication = new SpringApplication(objects);
-		// springApplication.setWebEnvironment(false);
-
-		// springApplication.setAdditionalProfiles("AAA");
-
-		springApplication.run(args);
 	}
 
 }

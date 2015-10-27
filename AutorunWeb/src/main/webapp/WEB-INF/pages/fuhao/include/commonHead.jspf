@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
+<!-- 定义Base -->
 <base href="${contextPathURL}" target="_self"/>
 
 <script src="${pageContext.request.contextPath}/resource/js/site/ajax.js"></script>
