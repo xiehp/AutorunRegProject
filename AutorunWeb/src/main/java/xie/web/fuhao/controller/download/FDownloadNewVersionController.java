@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("download")
 public class FDownloadNewVersionController extends XDownloadNewVersionController {
 
-	private static final long serialVersionUID = 1L;
-
 	@RequestMapping("downloadNewVersion")
-	public void downloadNewVersion(@RequestParam(required=false) String clientVersion, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public void downloadNewVersion(@RequestParam(required = false) String clientVersion, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		doDownloadNewVersion(clientVersion, req, resp);
 	}
 

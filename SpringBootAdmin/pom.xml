@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>SpringBootAdmin</groupId>
 	<artifactId>SpringBootAdmin</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>3.90.001</version>
 
 	<properties>
@@ -16,6 +16,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- server -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-server</artifactId>
@@ -26,11 +27,19 @@
 			<artifactId>spring-boot-admin-server-ui</artifactId>
 			<version>1.2.3</version>
 		</dependency>
+
+		<!-- client -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
 			<version>1.2.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jolokia</groupId>
+			<artifactId>jolokia-core</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>junit</groupId>

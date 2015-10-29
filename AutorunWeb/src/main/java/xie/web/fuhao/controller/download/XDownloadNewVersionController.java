@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import xie.web.fuhao.controller.base.XBaseController;
 import xie.web.fuhao.utils.FNewVersionUtils;
 import xie.web.fuhao.utils.FWebUtils;
+import xie.web.utils.HttpUtils;
 
 public class XDownloadNewVersionController extends XBaseController {
 
@@ -27,28 +28,30 @@ public class XDownloadNewVersionController extends XBaseController {
 	protected void doDownloadFile(File lastModifiedFile, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		String nowDateStr = format.format(new Date());
-		String printStr = nowDateStr + " 开始接受请求：" + req.getRemoteAddr() + ":" + req.getRemotePort() + " " + req.getRemoteHost() + " " + req.getHeader("x-forwarded-for");
+		String startDateStr = format.format(new Date());
+		String printStr = startDateStr + " 开始接受请求：" + req.getRemoteAddr() + ":" + req.getRemotePort() + " " + req.getRemoteHost() + " " + req.getHeader("x-forwarded-for");
 		System.out.println();
 		System.out.println(printStr);
 		logger.info(printStr);
 
 		if (lastModifiedFile == null) {
 			resp.getWriter().print("传送的文件为空。");
-			System.out.println(nowDateStr + " 传送的文件为空。");
-			logger.info(nowDateStr + " 传送的文件为空。");
+			System.out.println(startDateStr + " 传送的文件为空。");
+			logger.info(startDateStr + " 传送的文件为空。");
+			return;
 		}
 
 		if (!lastModifiedFile.exists()) {
 			resp.getWriter().print("没有找到可以传送的文件。" + lastModifiedFile.getName());
-			System.out.println(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
-			logger.warn(nowDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
+			System.out.println(startDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
+			logger.warn(startDateStr + " 没有找到可以传送的文件。" + lastModifiedFile.getAbsolutePath());
+			return;
 		}
 
-		Date nowDate = new Date();
-		nowDateStr = format.format(nowDate);
-		System.out.println(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
-		logger.info(nowDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
+		Date startDate = new Date();
+		startDateStr = format.format(startDate);
+		System.out.println(startDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
+		logger.info(startDateStr + " 开始传送文件：" + lastModifiedFile.getAbsolutePath());
 		// 返回给客户端
 		resp.setContentType("application/x-msdownload");
 		resp.setContentLength((int) lastModifiedFile.length());
@@ -71,14 +74,14 @@ public class XDownloadNewVersionController extends XBaseController {
 			os.flush();
 		} catch (IOException e) {
 			Date overDate = new Date();
-			nowDateStr = format.format(overDate);
+			startDateStr = format.format(overDate);
 			if (e.getClass().getName().contains("ClientAbortException")) {
 				hasClientAbortException = true;
-				System.out.println(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-				logger.warn(nowDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				System.out.println(startDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - startDate.getTime()) / 1000 + "秒。");
+				logger.warn(startDateStr + " 客户端停止接收。时间：" + (overDate.getTime() - startDate.getTime()) / 1000 + "秒。");
 			} else {
-				System.out.println(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-				logger.error(nowDateStr + " 文件传输失败。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+				System.out.println(startDateStr + " 文件传输失败。时间：" + (overDate.getTime() - startDate.getTime()) / 1000 + "秒。");
+				logger.error(startDateStr + " 文件传输失败。时间：" + (overDate.getTime() - startDate.getTime()) / 1000 + "秒。");
 				throw e;
 			}
 		} finally {
@@ -99,9 +102,9 @@ public class XDownloadNewVersionController extends XBaseController {
 		}
 		if (!hasClientAbortException) {
 			Date overDate = new Date();
-			nowDateStr = format.format(overDate);
-			System.out.println(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
-			logger.info(nowDateStr + " 文件传输成功。时间：" + (overDate.getTime() - nowDate.getTime()) / 1000 + "秒。");
+			startDateStr = format.format(overDate);
+			System.out.println(startDateStr + " 文件传输成功。时间：" + (overDate.getTime() - startDate.getTime()) / 1000 + "秒。");
+			logger.info(startDateStr + " 文件传输成功。时间：" + (overDate.getTime() - startDate.getTime()) / 1000 + "秒。");
 		}
 	}
 
@@ -113,6 +116,7 @@ public class XDownloadNewVersionController extends XBaseController {
 	 * @throws IOException
 	 */
 	protected void doDownloadNewVersion(String clientVersion, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		logger.info("doDownloadNewVersion clientVersion:" + clientVersion);
 		File lastModifiedFile = FNewVersionUtils.getNewVersionFile(clientVersion, req);
 		doDownloadFile(lastModifiedFile, req, resp);
 	}
