@@ -1,26 +1,39 @@
 package xie.web.spring.boot.interceptor;
 
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.autoconfigure.web.ServerPropertiesAutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import xie.web.utils.HttpUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import xie.web.utils.HttpUtils;
+import java.util.List;
 
 @Configuration
+@AutoConfigureAfter(ServerPropertiesAutoConfiguration.class)
+@EnableConfigurationProperties
 public class WebPageInterceptor extends HandlerInterceptorAdapter {
-	
+
 	Logger logger = LoggerFactory.getLogger(getClass());
 
 	private List<String> excludedUrls;
-	
+
 	private String includeUrl;
+
+	//@Autowired
+	//ServerPropertiesAutoConfiguration serverPropertiesAutoConfiguration;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse arg1, Object arg2) throws Exception {
@@ -29,12 +42,12 @@ public class WebPageInterceptor extends HandlerInterceptorAdapter {
 		// 放入contextPath的Url
 		request.setAttribute("contextPathURL", HttpUtils.getContextPathUrl(request));
 
-
 		String servletPath = request.getServletPath();
+		request.setAttribute("springMvcPath", servletPath);
 		if (includeUrl != null && includeUrl.equals(servletPath)) {
 			logger.info("WebPageInterceptor.preHandle " + request.getRequestURL());
 		}
-		
+
 		return true;
 	}
 

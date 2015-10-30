@@ -1,24 +1,17 @@
 package xie.web.fuhao.controller.register;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.base.db.service.ISerialNumberInfoService;
 import xie.web.fuhao.controller.base.ResponseJsonMap;
-import xie.web.fuhao.controller.base.XBaseController;
 import xie.web.fuhao.controller.base.XBaseJsonController;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("register")
@@ -32,7 +25,9 @@ public class XDoRegisterController extends XBaseJsonController {
 	@RequestMapping(value = "/doRegisterInfo")
 	@ResponseBody
 	public ResponseJsonMap doRegisterInfo(//HttpServletRequest request, HttpServletResponse response,
-			@RequestParam(defaultValue = "") String serialNumber, @RequestParam(defaultValue = "") String pcInfo) {
+										  @RequestParam(defaultValue = "") String serialNumberId,
+										  @RequestParam(defaultValue = "") String serialNumber,
+										  @RequestParam(defaultValue = "") String pcInfo) {
 
 		ResponseJsonMap responseJsonMap = createResponseJsonMap();
 		// 检查注册码是否已经存在, 并且判断次数是否已经达到上限
@@ -61,7 +56,7 @@ public class XDoRegisterController extends XBaseJsonController {
 
 	/**
 	 * 进行/延长注册时间<br>
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("addRegister")
@@ -72,7 +67,7 @@ public class XDoRegisterController extends XBaseJsonController {
 
 	/**
 	 * 减少注册时间<br>
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("reduceRegister")
@@ -83,7 +78,7 @@ public class XDoRegisterController extends XBaseJsonController {
 
 	/**
 	 * 删除注册<br>
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping("deleteRegister")

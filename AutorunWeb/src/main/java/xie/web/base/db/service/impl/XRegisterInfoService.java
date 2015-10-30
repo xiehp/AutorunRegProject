@@ -21,6 +21,7 @@ import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.base.db.service.XBaseService;
+import xie.web.fuhao.utils.FWebFuhaoConst;
 
 @Service
 @Transactional
@@ -100,7 +101,7 @@ public class XRegisterInfoService extends XBaseService implements IRegisterInfoS
 		if (serialNumberInfoEntity == null) {
 			serialNumberInfoEntity = new XSerialNumberInfoEntity();
 			serialNumberInfoEntity.setSerialNumber(serialNumber);
-			serialNumberInfoEntity.setMaxRegistCount(2);
+			serialNumberInfoEntity.setMaxRegistCount(FWebFuhaoConst.INIT_MAX_REGIST_COUNT);
 			serialNumberInfoEntity.setFirstRegistDate(registerInfoEntity.getRegistDate());
 		}
 		int count = registerInfoDao.countBySerialNumber(serialNumber);
