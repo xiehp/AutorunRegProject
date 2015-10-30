@@ -1,0 +1,71 @@
+
+
+#### System Param ###################################
+JavaJreHome=D:/Java/X86/jdk1.8.0_60/jre
+JavaCompilerVersion=1.8
+java_MavenDependencies_lib_Dir=${basedir}\\lib\\MavenDependencies
+
+
+#### Base Path ###################################
+AntBuildBasePath=${basedir}/AntBuild
+AntBuild_ProGuard_BasePath=${AntBuildBasePath}/porGuard
+AntBuild_exe4j_BasePath=${AntBuildBasePath}/exe4j
+
+
+######################################
+#fuhao ant project info
+#001,003,005...\u975e\u9650\u5236\u7248\u672c
+#000,002,004...\u9650\u5236\u7248\u672c \u65e0\u6cd5\u591a\u5f00  
+FuhaoAutorunVersion=3.91.001.8
+FuhaoAutorunXUtilsProjectName=XUtils
+FuhaoAutorunFuhaoAutoProjectName=FuhaoAuto
+FuhaoAutorunXGUIProjectName=XGUI
+
+FuhaoAutorunLibDir=F:/work/ANT/FuhaoAuto/lib
+FuhaoAutorunSWTLibDir=${FuhaoAutorunLibDir}/SWT
+
+######################################
+FuhaoAutorunXUtilsJarDir=F:/work/XUtils/lib
+FuhaoAutorunFuhaoAutoJarDir=F:/work/fuhao/eee
+FuhaoAutorunXGUIDir=F:/work/XGUI
+FuhaoAutorunXGUIJarDir=F:/work/XGUI/lib
+
+#### XUtils ##################################
+#UpdateMd5AndVersionTaskClassName=xie.fuhao.anttask.UpdateMd5AndVersionTask
+
+
+######################################
+FuhaoAutorunReleaseBaseDir=F:/work/ANT/FuhaoAuto
+FuhaoAutorunReleaseClassesDir=F:/work/ANT/FuhaoAuto/Classes
+FuhaoAutorunReleaseJarDir=${FuhaoAutorunReleaseBaseDir}/ReleaseJar
+
+
+#FuhaoAutorunWorkspaceDir=F:/eclipse/workspace
+
+######################################
+#Progurard
+#FuhaoAutorunProgurardJarFile=D:/soft/proguard4.11/lib/proguard.jar
+FuhaoAutorunProgurardJarFile=D:/soft/proguard5.2.1/lib/proguard.jar
+FuhaoAutorunProgurardConfTempletDir=${AntBuild_ProGuard_BasePath}/templet
+FuhaoAutorunProgurardConfDir=F:/work/ANT/FuhaoAuto/conf/Progurad
+
+FuhaoAutorunProgurardFirstActionName=confFuhao_jar_GUI_first.conf
+FuhaoAutorunProgurardSecondActionName=confFuhao_jar_GUI_second.conf
+
+FuhaoAutorunProGuardMixAddName=Mix_
+FuhaoAutorunProGuardBaseDir=F:/work/fuhao/ProGuard
+
+ProGuardNewJarAppendStr=_new
+
+
+#### exe4j ##################################
+Exe4jConfigFileTempletDir=${AntBuild_exe4j_BasePath}/templet
+#Exe4jAntJarFilePath=D:/Program Files (x86)/exe4j/bin/ant.jar
+Exe4jAntJarFilePath=D:/soft/exe4j/bin/ant.jar
+
+
+
+
+
+
+
