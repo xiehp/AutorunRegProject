@@ -9,7 +9,7 @@
 	</parent>
 
 	<artifactId>AutorunWeb</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<!-- spring-boot -->
@@ -153,11 +153,11 @@
 		<finalName>AutorunWeb</finalName>
 		<defaultGoal>package</defaultGoal>
 		<plugins>
-			<!-- 定义spring-boot可执行jar 
+			<!-- 定义spring-boot可执行jar -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>1.2.6.RELEASE</version>
+				<version>1.2.7.RELEASE</version>
 				<configuration>
 					<mainClass>xie.web.spring.boot.AutoRunWebStart</mainClass>
 					<layout>ZIP</layout>
@@ -169,7 +169,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>-->
+			</plugin>
 
 			<!--
 			<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId>
