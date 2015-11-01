@@ -30,5 +30,10 @@ function requestAjax(url, successCallback, errorCallback) {
 
 	}
 	xmlHttp.open("GET", url, true);
+	//xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlHttp.send();
+}
+
+function encode(str) {
+	//str = str.re
 }

@@ -1,14 +1,15 @@
 package xie.web.fuhao.controller.register;
 
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.base.db.service.ISerialNumberInfoService;
-import xie.web.fuhao.controller.base.ResponseJsonMap;
+import xie.web.fuhao.controller.base.JsonResponseBean;
 import xie.web.fuhao.controller.base.XBaseJsonController;
-
-import javax.annotation.Resource;
 
 public class XDoRegisterControllerTest extends XBaseJsonController {
 
@@ -17,10 +18,10 @@ public class XDoRegisterControllerTest extends XBaseJsonController {
 	@Resource
 	private ISerialNumberInfoService serialNumberInfoService;
 
-	public ResponseJsonMap doRegisterInfo(//HttpServletRequest request, HttpServletResponse response,
+	public JsonResponseBean doRegisterInfo(// HttpServletRequest request, HttpServletResponse response,
 			@RequestParam(defaultValue = "") String serialNumber, @RequestParam(defaultValue = "") String pcInfo) {
 
-		ResponseJsonMap responseJsonMap = createResponseJsonMap();
+		JsonResponseBean responseJsonMap = createResponseJsonMap(true);
 		return responseJsonMap;
 	}
 

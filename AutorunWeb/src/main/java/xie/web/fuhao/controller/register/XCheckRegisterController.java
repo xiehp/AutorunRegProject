@@ -12,7 +12,7 @@ import xie.web.base.db.dao.ISerialNumberInfoDao;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
-import xie.web.fuhao.controller.base.ResponseJsonMap;
+import xie.web.fuhao.controller.base.JsonResponseBean;
 import xie.web.fuhao.controller.base.XBaseController;
 import xie.web.fuhao.controller.base.XBaseJsonController;
 
@@ -34,8 +34,8 @@ public class XCheckRegisterController extends XBaseJsonController {
 	 */
 	@RequestMapping("checkRegister")
 	@ResponseBody
-	public ResponseJsonMap checkRegister(@RequestParam String serialNumber) {
-		ResponseJsonMap responseJsonMap = createResponseJsonMap();
+	public JsonResponseBean checkRegister(@RequestParam String serialNumber) {
+		JsonResponseBean responseJsonMap = createResponseJsonMap(true);
 
 		XSerialNumberInfoEntity entity = serialNumberInfoDao.findBySerialNumber(serialNumber);
 		responseJsonMap.getResult().put("data", entity);
@@ -50,8 +50,8 @@ public class XCheckRegisterController extends XBaseJsonController {
 	 */
 	@RequestMapping("getRegisterInfo")
 	@ResponseBody
-	public ResponseJsonMap getRegisterInfo(@RequestParam String serialNumber, HttpServletRequest request) {
-		ResponseJsonMap responseJsonMap = createResponseJsonMap();
+	public JsonResponseBean getRegisterInfo(@RequestParam String serialNumber, HttpServletRequest request) {
+		JsonResponseBean responseJsonMap = createResponseJsonMap(true);
 
 		XSerialNumberInfoEntity entity = serialNumberInfoDao.findBySerialNumber(serialNumber);
 		responseJsonMap.getResult().put("data", entity);

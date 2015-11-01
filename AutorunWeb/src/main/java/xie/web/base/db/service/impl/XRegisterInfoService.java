@@ -1,6 +1,7 @@
 package xie.web.base.db.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.profiler.Profiler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import xie.web.base.db.dao.IRegisterInfoDao;
@@ -21,7 +21,7 @@ import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.entity.impl.XSerialNumberInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.base.db.service.XBaseService;
-import xie.web.fuhao.utils.FWebFuhaoConst;
+import xie.web.fuhao.utils.FFuhaoWebConst;
 
 @Service
 @Transactional
@@ -86,31 +86,73 @@ public class XRegisterInfoService extends XBaseService implements IRegisterInfoS
 	 * @param pcInfo 注册申请的电脑的信息
 	 * @return 成功注册后的信息
 	 */
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED, readOnly = false)
-	public XRegisterInfoEntity register(String serialNumber, String pcInfo) {
-		// 保存当前注册信息和对应的机器信息
-		XRegisterInfoEntity registerInfoEntity = new XRegisterInfoEntity();
-		registerInfoEntity.setSerialNumber(serialNumber);
-		registerInfoEntity.setPcInfo(pcInfo);
-		registerInfoEntity.setRegistDate(new Date());
-		registerInfoEntity = registerInfoDao.save(registerInfoEntity);
+	//@Override
+	// @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+//	@Transactional
+//	public XRegisterInfoEntity register(String serialNumber, String pcInfo) {
+//		// 保存当前注册信息和对应的机器信息
+//		XRegisterInfoEntity registerInfoEntity = new XRegisterInfoEntity();
+//		registerInfoEntity.setSerialNumber(serialNumber);
+//		registerInfoEntity.setPcInfo(pcInfo);
+//		registerInfoEntity.setRegistDate(new Date());
+//		registerInfoEntity.setRegistCount(1);
+//		registerInfoEntity = registerInfoDao.save(registerInfoEntity);
+//
+//		// 同时更新注册码信息表
+//		XSerialNumberInfoEntity serialNumberInfoEntity = serialNumberInfoDao.findBySerialNumber(serialNumber);
+//		if (serialNumberInfoEntity == null) {
+//			serialNumberInfoEntity = new XSerialNumberInfoEntity();
+//			serialNumberInfoEntity.setSerialNumber(serialNumber);
+//			serialNumberInfoEntity.setMaxRegistCount(FFuhaoWebConst.INIT_MAX_REGIST_COUNT);
+//			serialNumberInfoEntity.setFirstRegistDate(registerInfoEntity.getRegistDate());
+//		}
+//		int count = registerInfoDao.countBySerialNumber(serialNumber);
+//		serialNumberInfoEntity.setNowRegistCount(count);
+//		serialNumberInfoEntity = serialNumberInfoDao.save(serialNumberInfoEntity);
+//
+//		// 将注册码ID信息更新回注册信息中
+//		registerInfoEntity.setSerialNumberId(serialNumberInfoEntity.getId());
+//		registerInfoEntity = registerInfoDao.save(registerInfoEntity);
+//
+//		return registerInfoEntity;
+//	}
 
-		// 同时更新注册码信息表
+	@Transactional
+	@Override
+	public XRegisterInfoEntity register(String serialNumber, String encodeSerialNumber, String pcInfo) {
+		Date nowDate = new Date();
+		
+		// 检查注册码表中数据是否存在，同时更新注册码信息表
 		XSerialNumberInfoEntity serialNumberInfoEntity = serialNumberInfoDao.findBySerialNumber(serialNumber);
 		if (serialNumberInfoEntity == null) {
 			serialNumberInfoEntity = new XSerialNumberInfoEntity();
 			serialNumberInfoEntity.setSerialNumber(serialNumber);
-			serialNumberInfoEntity.setMaxRegistCount(FWebFuhaoConst.INIT_MAX_REGIST_COUNT);
-			serialNumberInfoEntity.setFirstRegistDate(registerInfoEntity.getRegistDate());
+			serialNumberInfoEntity.setEncodeSerialNumber(encodeSerialNumber);
+			serialNumberInfoEntity.setMaxRegistCount(FFuhaoWebConst.REGIST_INFO_TABLE_INIT_MAX_REGIST_COUNT);
+			serialNumberInfoEntity.setNowRegistCount(0);
+			serialNumberInfoEntity.setFirstRegistDate(nowDate);
+			serialNumberInfoEntity = serialNumberInfoDao.save(serialNumberInfoEntity);
 		}
-		int count = registerInfoDao.countBySerialNumber(serialNumber);
-		serialNumberInfoEntity.setNowRegistCount(count);
-		serialNumberInfoEntity = serialNumberInfoDao.save(serialNumberInfoEntity);
 
-		// 将注册码ID信息更新回注册信息中
+		// 保存当前注册信息和对应的机器信息
+		XRegisterInfoEntity registerInfoEntity = new XRegisterInfoEntity();
 		registerInfoEntity.setSerialNumberId(serialNumberInfoEntity.getId());
+		registerInfoEntity.setSerialNumber(serialNumber);
+		registerInfoEntity.setPcInfo(pcInfo);
+		registerInfoEntity.setRegistDate(nowDate);
+		registerInfoEntity.setRegistCount(1);
 		registerInfoEntity = registerInfoDao.save(registerInfoEntity);
+
+		// 判断是否已经存在其他该注册码和对应机器信息，没有的话，则该注册码注册次数加1，否则认为注册次数不需要增加
+		int dataCount = registerInfoDao.countBySerialNumberIdAndPcInfo(serialNumberInfoEntity.getId(), pcInfo);
+		 // 注册记录为0次或者1次  或者超过了同一机器信息最大注册次数的时候，才会去增加该注册码实际注册次数
+		if (dataCount <= 1 || dataCount > FFuhaoWebConst.SAME_PCINFO_MAX_REGIST_COUNT) {
+			// 更新注册码被注册次数
+//			int count = registerInfoDao.countBySerialNumber(serialNumber);
+//			serialNumberInfoEntity.setNowRegistCount(count); // TODO 重新计算总次数
+			serialNumberInfoEntity.setNowRegistCount(serialNumberInfoEntity.getNowRegistCount() + 1);
+			serialNumberInfoEntity = serialNumberInfoDao.save(serialNumberInfoEntity);
+		}
 
 		return registerInfoEntity;
 	}
@@ -121,7 +163,12 @@ public class XRegisterInfoService extends XBaseService implements IRegisterInfoS
 	}
 
 	@Override
-	public XRegisterInfoEntity findBySerialNumberAndPcInfo(String serialNumber, String pcInfo) {
-		return registerInfoDao.findBySerialNumberAndPcInfo(serialNumber, pcInfo);
+	public List<XRegisterInfoEntity> findBySerialNumberIdAndPcInfo(String serialNumberId, String pcInfo) {
+		return registerInfoDao.findBySerialNumberIdAndPcInfo(serialNumberId, pcInfo);
+	}
+
+	@Override
+	public int countBySerialNumberIdAndPcInfo(String serialNumberId, String pcInfo) {
+		return registerInfoDao.countBySerialNumberIdAndPcInfo(serialNumberId, pcInfo);
 	}
 }

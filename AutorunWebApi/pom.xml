@@ -24,7 +24,6 @@
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
-			<version>1.2.3</version>
 		</dependency>
 
 

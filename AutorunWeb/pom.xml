@@ -52,23 +52,20 @@
 			<artifactId>spring-security-config</artifactId>
 		</dependency> -->
 		
-		<!-- spring-boot-admin -->
+		<!-- spring-boot-admin client -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
-			<version>1.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-ext</artifactId>
-			<version>1.7.12</version>
 		</dependency>
 		
 		<!-- c3p0数据源 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>${hibernate.version}</version>
 		</dependency>
 
 		<!-- 二级缓存ehcache -->

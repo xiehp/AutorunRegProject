@@ -43,11 +43,20 @@
 
 	<!--指定logger name为包名或类全名 指定级别 additivity设置是否传递到root logger -->
 	<logger name="xie" level="${printLevel}" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
 		<appender-ref ref="FuhaoFileAppender"/>
 	</logger>
 	<logger name="FuhaoConsoleLogger" level="${printLevel}" additivity="false">
 		<appender-ref ref="ConsoleAppender"/>
 	</logger>
+	<logger name="FuhaoFileLogger" level="${printLevel}" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="FuhaoFileAppender"/>
+	</logger>
+	<logger name="de.codecentric.boot.admin.services.ApplicationRegistrator" level="ERROR" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
 	<!--根logger控制-->
 	<root level="INFO">
 		<appender-ref ref="ConsoleAppender"/>

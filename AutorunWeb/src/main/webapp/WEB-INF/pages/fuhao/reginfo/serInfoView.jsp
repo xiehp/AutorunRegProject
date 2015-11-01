@@ -6,10 +6,18 @@
 
 <script>
 	function submitRegist() {
-		var registSerialNumber = document.getElementById("registSerialNumber").value;
-		requestAjax("register/doRegisterInfo?serialNumber=" + registSerialNumber, function(jsonData) {
+		var serialNumberId = document.getElementById("serialNumberId").value;
+		var serialNumber = document.getElementById("serialNumber").value;
+		var encodeSerialNumber = document.getElementById("encodeSerialNumber").value;
+		var pcInfo = document.getElementById("pcInfo").value;
+		var url = "register/doRegisterInfo?serialNumberId=" + encodeURIComponent(serialNumberId);
+		url = url + "&serialNumber=" + encodeURIComponent(serialNumber);
+		url = url + "&encodeSerialNumber=" + encodeURIComponent(encodeSerialNumber);
+		url = url + "&pcInfo=" + encodeURIComponent(pcInfo);
+		requestAjax(url, function(jsonData) {
 			document.getElementById("registResultSuccess").value = jsonData.success;
-			document.getElementById("registResultMessage").value = jsonData.message;
+			document.getElementById("registResultSuccessMessage").value = jsonData.successMessage;
+			document.getElementById("registResultErrorMessage").value = jsonData.errorMessage;
 			document.getElementById("registResultData").innerText = JSON.stringify(jsonData.result.data);
 		})
 	}
@@ -27,15 +35,21 @@
 
 	</form>
 	<form id="registForm" action="register/doRegisterInfo">
-		<nobr>请输入要注册的注册码：</nobr>
-		<input id="registSerialNumber" value="${serialNumber}" />
+		<nobr>请输入要注册的注册码：</nobr><br>
+		<nobr>serialNumberId：</nobr><input id="serialNumberId" value="${serialNumberId}" /><br>
+		<nobr>serialNumber：</nobr><input id="serialNumber" value="${serialNumber}" /><br>
+		<nobr>encodeSerialNumber：</nobr><input id="encodeSerialNumber" value="${encodeSerialNumber}" /><br>
+		<nobr>pcInfo：</nobr><input id="pcInfo" value="${pcInfo}" /><br>
 		<input type="button" onclick="submitRegist()" value="注册">
 		<br>
 		<nobr>结果：</nobr>
 		<input id="registResultSuccess">
 		<br>
-		<nobr>信息：</nobr>
-		<input id="registResultMessage">
+		<nobr>成功信息：</nobr>
+		<input id="registResultSuccessMessage">
+		<br>
+		<nobr>错误信息：</nobr>
+		<input id="registResultErrorMessage">
 		<br>
 		<nobr>数据：</nobr>
 		<label id="registResultData"></label><br>
@@ -59,15 +73,15 @@
 
 	<p></p>
 	<p>check文件
-	<form id="checkNewVersionfile" action="check/getNewVersionName">
-		<input id="clientVersion" value="${clientVersion}" />
+	<form id="checkNewVersionfile" method="post" action="check/getNewVersionName">
+		<input name="clientVersion" value="${clientVersion}" />
 		<input type="submit" value="check">
 	</form>
 	</p>
 	下载文件
 	<form id="downloadNewVersionfile" action="download/downloadNewVersion">
 		请输入要注册的注册码：
-		<input id="clientVersion" value="${clientVersion}" />
+		<input name="clientVersion" value="${clientVersion}" />
 		<input type="submit" value="download">
 	</form>
 	</p>
