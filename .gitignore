@@ -19,6 +19,8 @@ hs_err_pid*
 /*/logs/
 /*/target/
 /*/lib/MavenDependencies/
+/*/src/main/webapp/fuhaoautolib/
+
 
 
 # idea IDE

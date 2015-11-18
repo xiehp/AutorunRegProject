@@ -42,9 +42,6 @@ public class AutoRunWebStart extends SpringBootServletInitializer {
 
 	public static SpringApplication springApplication;
 
-	@Autowired
-	private MyConfig myConfig;
-
 	public static void main(String[] args) {
 		Object[] objects = new Object[] { AutoRunWebStart.class };
 		// SpringApplication.run(objects, args);
@@ -56,6 +53,9 @@ public class AutoRunWebStart extends SpringBootServletInitializer {
 
 		springApplication.run(args);
 	}
+
+	@Autowired
+	private MyConfig myConfig;
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
