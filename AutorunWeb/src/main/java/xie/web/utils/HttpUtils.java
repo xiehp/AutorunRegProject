@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 public class HttpUtils {
 	public static String getContextPathUrl(final HttpServletRequest request) {
 		final String requestURL = request.getRequestURL().toString();
-		String contextPathUrl = requestURL.substring(0, requestURL.lastIndexOf(request.getServletPath())) + "/";
+//		String contextPathUrl = requestURL.substring(0, requestURL.lastIndexOf(request.getServletPath())) + "/";
+		String contextPathUrl = requestURL.substring(0, requestURL.lastIndexOf(request.getServletPath()));
 		return contextPathUrl;
 	}
 }

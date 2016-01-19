@@ -1,17 +1,19 @@
 package xie.web.spring.boot;
 
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+
 import xie.web.base.db.dao.IRegisterInfoDao;
 import xie.web.base.db.entity.impl.XRegisterInfoEntity;
 import xie.web.base.db.service.IRegisterInfoService;
 import xie.web.study.Customer;
 import xie.web.study.CustomerRepository;
-
-import java.util.Date;
 
 //@SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -37,9 +39,9 @@ public class Application implements CommandLineRunner {
 		aaa.setId("123123546");
 		aaa.setPcInfo("sdfsdfsd");
 		aaa.setRegistDate(new Date());
-		registerInfoService.register("gggg", "234sasad");
-		XRegisterInfoEntity vvv = registerInfoService.findBySerialNumberAndPcInfo("gggg", "234sasad");
-		System.out.println(vvv.getSerialNumber());
+		registerInfoService.register("gggg",null, "234sasad");
+		List<XRegisterInfoEntity> vvv = registerInfoService.findBySerialNumberIdAndPcInfo("gggg", "234sasad");
+		System.out.println(vvv.get(0).getSerialNumber());
 
 		// save a couple of customers
 		repository.save(new Customer("Jack", "Bauer"));

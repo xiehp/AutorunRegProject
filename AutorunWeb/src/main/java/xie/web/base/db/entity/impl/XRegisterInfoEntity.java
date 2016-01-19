@@ -8,22 +8,30 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Register_Info")
-//@Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
-public class XRegisterInfoEntity extends XBaseCommonEntity  {
+// @Cache(region = "P2BCache", usage = CacheConcurrencyStrategy.READ_WRITE)
+public class XRegisterInfoEntity extends XBaseCommonEntity {
 
-	//private static final long serialVersionUID = -1993148360252911166L;
+	private static final long serialVersionUID = -6428151895201230707L;
 
-	@Column(name = "Serial_Number_Id")
+	/** 注册码ID */
+	@Column(name = "Serial_Number_Id", nullable = false)
 	private String serialNumberId;
 
-	@Column(name = "Serial_Number")
+	/** 原始注册码 */
+	@Column(name = "Serial_Number", nullable = false)
 	private String serialNumber;
 
+	/** 机器信息 */
 	@Column(name = "Pc_Info")
 	private String pcInfo;
 
+	/** 注册时间 */
 	@Column(name = "Regist_Date", nullable = false)
 	private Date registDate;
+
+	/** 同一个电脑的注册次数 */
+	@Column(name = "Regist_Count", nullable = false)
+	private int registCount;
 
 	public String getSerialNumberId() {
 		return serialNumberId;
@@ -55,5 +63,13 @@ public class XRegisterInfoEntity extends XBaseCommonEntity  {
 
 	public void setRegistDate(Date registDate) {
 		this.registDate = registDate;
+	}
+
+	public int getRegistCount() {
+		return registCount;
+	}
+
+	public void setRegistCount(int registCount) {
+		this.registCount = registCount;
 	}
 }

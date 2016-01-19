@@ -1,61 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="false" scanPeriod="60 seconds" debug="false">
 
-<!-- 
-	<include resource="org/springframework/boot/logging/logback/base.xml"/>
- -->
+	<!--
+		<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	 -->
 	<jmxConfigurator/>
 
-    <!-- 控制台输出日志 -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} %-5level %logger{36} >>> %msg%n</pattern>
-        </encoder>
-    </appender>
-    <!--每天生成一个日志文件，保存30天的日志文件。-->
-    <appender name="DayFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs\\%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-        	<!-- 
-            <pattern>%-6relative [%thread] %-5level %logger{35} - %msg%n</pattern>
-             -->
-            <pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} >>> %msg%n</pattern>
-        </encoder>
-    </appender>
-    <appender name="FuhaoConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%-10thread] %-5level %logger{36} >>> %msg%n</pattern>
-        </encoder>
-    </appender>
-    <appender name="FuhaoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>14</maxHistory>
-        </rollingPolicy>
-        <encoder>
-        	<!-- 
-            <pattern>%-6relative [%thread] %-5level %logger{35} - %msg%n</pattern>
-            <pattern>[%-10thread] %-5level >>> [%d{yyyy/MM/dd}]%msg%n</pattern>
-             -->
-            <pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} >>> %msg%n</pattern>
-        </encoder>
-    </appender>
-    
-	<property name="printLevel" value="INFO" />
-	
-    <!--指定logger name为包名或类全名 指定级别 additivity设置是否传递到root logger -->
-    <logger name="FuhaoFileLogger" level="${printLevel}" additivity="false">
-        <appender-ref ref="FuhaoFileAppender" />
-    </logger>
-    <logger name="FuhaoConsoleLogger" level="${printLevel}" additivity="false">
-        <appender-ref ref="FuhaoConsoleAppender" />
-    </logger>
-    <!--根logger控制-->
-    <root level="INFO">
-        <appender-ref ref="FuhaoFileAppender" />
-        <appender-ref ref="FuhaoConsoleAppender" />
-    </root>
+	<!-- 控制台输出日志 -->
+	<appender name="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%-10thread] %-5level %logger{36} >>> %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--每天生成一个日志文件，保存30天的日志文件。-->
+	<appender name="SystemFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs\\system_%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<!--
+			<pattern>%-6relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+			 -->
+			<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} >>> %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FuhaoFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/fuhao_%d{yyyy-MM-dd}.log</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<!--
+			<pattern>%-6relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+			<pattern>[%-10thread] %-5level >>> [%d{yyyy/MM/dd}]%msg%n</pattern>
+			 -->
+			<pattern>%d{yyyy/MM/dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} >>> %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<property name="printLevel" value="INFO"/>
+
+	<!--指定logger name为包名或类全名 指定级别 additivity设置是否传递到root logger -->
+	<logger name="xie" level="${printLevel}" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="FuhaoFileAppender"/>
+	</logger>
+	<logger name="FuhaoConsoleLogger" level="${printLevel}" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+	<logger name="FuhaoFileLogger" level="${printLevel}" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="FuhaoFileAppender"/>
+	</logger>
+	<logger name="de.codecentric.boot.admin.services.ApplicationRegistrator" level="ERROR" additivity="false">
+		<appender-ref ref="ConsoleAppender"/>
+	</logger>
+
+	<!--根logger控制-->
+	<root level="INFO">
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="SystemFileAppender"/>
+	</root>
 </configuration>

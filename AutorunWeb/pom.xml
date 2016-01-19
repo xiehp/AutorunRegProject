@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -10,6 +11,7 @@
 
 	<artifactId>AutorunWeb</artifactId>
 	<packaging>war</packaging>
+
 
 	<dependencies>
 		<!-- spring-boot -->
@@ -25,21 +27,22 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+
 		<!-- spring-boot-tomcat -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		
 		<!-- spring-security
@@ -51,24 +54,21 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 		</dependency> -->
-		
-		<!-- spring-boot-admin -->
+
+		<!-- spring-boot-admin client -->
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-starter-client</artifactId>
-			<version>1.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-ext</artifactId>
-			<version>1.7.12</version>
 		</dependency>
-		
+
 		<!-- c3p0数据源 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
-			<version>${hibernate.version}</version>
 		</dependency>
 
 		<!-- 二级缓存ehcache -->
@@ -80,7 +80,7 @@
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 		</dependency>-->
-		
+
 		<!-- mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -156,11 +156,11 @@
 		<finalName>AutorunWeb</finalName>
 		<defaultGoal>package</defaultGoal>
 		<plugins>
-			<!-- 定义spring-boot可执行jar 
+			<!-- 定义spring-boot可执行jar -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>1.2.6.RELEASE</version>
+				<version>1.2.7.RELEASE</version>
 				<configuration>
 					<mainClass>xie.web.spring.boot.AutoRunWebStart</mainClass>
 					<layout>ZIP</layout>
@@ -172,14 +172,18 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>-->
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 
 			<!--
-			<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-war-plugin</artifactId>
-				<version>2.0.2</version> <configuration> <warSourceDirectory>/source/myproject/mywebapp/webapp</warSourceDirectory> 
-				</configuration> </plugin>
-
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>

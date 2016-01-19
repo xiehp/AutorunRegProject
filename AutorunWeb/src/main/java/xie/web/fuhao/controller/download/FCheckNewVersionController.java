@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import xie.web.fuhao.utils.FNewVersionUtils;
@@ -39,8 +40,8 @@ public class FCheckNewVersionController {
 
 	@RequestMapping(value = "/getNewVersion")
 	@ResponseBody
-	public String getNewVersion(HttpServletRequest request) {
-		File newFile = FNewVersionUtils.getNewVersionFile(request);
+	public String getNewVersion(@RequestParam(required=false) String clientVersion, HttpServletRequest request) {
+		File newFile = FNewVersionUtils.getNewVersionFile(clientVersion, request);
 		String newVersion = FNewVersionUtils.getNewVersionFileVersion(newFile);
 		if (newVersion == null || "".equals(newVersion)) {
 			newVersion = "0.0.0";
@@ -50,11 +51,14 @@ public class FCheckNewVersionController {
 
 	@RequestMapping(value = "/getNewVersionName")
 	@ResponseBody
-	public String getNewVersionName(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+	public String getNewVersionName(@RequestParam(required=false) String clientVersion, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		String newVersionNameFileName = "FileNotFound";
-		File newVersionNameFile = FNewVersionUtils.getNewVersionFile(request);
+		File newVersionNameFile = FNewVersionUtils.getNewVersionFile(clientVersion, request);
 		if (newVersionNameFile != null) {
-			newVersionNameFileName = newVersionNameFile.getName().replace(".exe", "");
+			newVersionNameFileName = newVersionNameFile.getName();
+			newVersionNameFileName = newVersionNameFileName.replace(".exe", "");
+			newVersionNameFileName = newVersionNameFileName.replace(".zip", "");
+			newVersionNameFileName = newVersionNameFileName.replace(".rar", "");
 //			newVersionNameFileName = new String(newVersionNameFileName.getBytes("UTF-8"), "iso-8859-1");
 		}
 		return newVersionNameFileName;
@@ -62,8 +66,8 @@ public class FCheckNewVersionController {
 
 	@RequestMapping(value = "/getNewVersionLastModify")
 	@ResponseBody
-	public String getNewVersionLastModify(HttpServletRequest request) {
-		File newVersionNameFile = FNewVersionUtils.getNewVersionFile(request);
+	public String getNewVersionLastModify(@RequestParam(required=false) String clientVersion, HttpServletRequest request) {
+		File newVersionNameFile = FNewVersionUtils.getNewVersionFile(clientVersion, request);
 		long lastTime = 0;
 		if (newVersionNameFile != null) {
 			lastTime = newVersionNameFile.lastModified();
